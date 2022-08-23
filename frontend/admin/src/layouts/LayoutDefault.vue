@@ -1,6 +1,6 @@
 <template>
 	<header class="py-3 bg-blue-700 mb-6">
-		<div class="centered flex justify-between">
+		<div class="centered flex items-center justify-between">
 			<router-link to="/" class="font-bold flex items-center">
 				<i class="material-icons flex-none mr-2 text-3xl">change_history</i>
 				<span>RDAdmin</span>
@@ -14,13 +14,13 @@
 	</header>
 	<div class="centered">
 		<div class="flex">
-			<div class="w-1/5">
+			<div class="w-1/5 hidden xl:block">
 				<aside-menu></aside-menu>
 			</div>
-			<div class="flex-1 lg:pl-6">
+			<div class="flex-1 xl:px-4">
 				<router-view></router-view>
 			</div>
-			<div class="w-1/5" v-if="settings.app_type === APP_TYPE_ENUM.shop">
+			<div class="w-1/5 hidden xl:block" v-if="settings.app_type === APP_TYPE_ENUM.shop">
 				<shop-aside-menu></shop-aside-menu>
 			</div>
 		</div>

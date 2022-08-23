@@ -3,13 +3,12 @@ const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const dotenv = require('dotenv');
+const dotenvFile = dotenv.config({ path: '../.env' });
 
 const isDev = process.argv.includes('development');
 const isProd = process.argv.includes('production');
-
-// filename: (pathData) => {
-// 	return pathData.chunk.name === 'main' ? '[name].js' : '[name]/[name].js';
-// },
+const devServerPort = dotenvFile.parsed.ADMIN_DEV_SERVER_PORT || 1345;
 
 module.exports = {
 	mode: isDev ? 'development' : 'production',
@@ -89,7 +88,7 @@ module.exports = {
 		static: {
 			directory: path.resolve(__dirname, 'dist'),
 		},
-		port: 1313,
+		port: devServerPort,
 		compress: true,
 		historyApiFallback: true,
 	},

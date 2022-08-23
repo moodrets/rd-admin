@@ -14,8 +14,11 @@ const routes = [
 			{ path: '/users', name: 'admin-users', component: DummyPage },
 			{ path: '/pages', name: 'admin-pages', component: DummyPage },
 			{ path: '/blocks', name: 'admin-blocks', component: DummyPage },
+			{ path: '/form-constructor', name: 'admin-form-constructor', component: DummyPage },
+			// shop
 			{ path: '/products', name: 'admin-products', component: DummyPage },
 			{ path: '/reviews', name: 'admin-reviews', component: DummyPage },
+			// 404
 			{ path: '/:pathMatch(.*)*', component: NotFoundPage },
 		],
 	},

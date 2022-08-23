@@ -11,6 +11,7 @@ const routes = [
 		children: [
 			{ path: '/', component: MainPage },
 			{ path: '/contacts', component: ContactsPage },
+			// 404
 			{ path: '/:pathMatch(.*)*', component: NotFoundPage },
 		],
 	},
