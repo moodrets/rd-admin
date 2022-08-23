@@ -21,7 +21,7 @@ export class Page {
 	url: string;
 
 	@Column()
-	name: string;
+	title: string;
 
 	@Column()
 	layout: string;

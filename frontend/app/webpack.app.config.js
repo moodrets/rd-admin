@@ -89,4 +89,7 @@ module.exports = {
 		compress: true,
 		historyApiFallback: true,
 	},
+	experiments: {
+		topLevelAwait: true,
+	},
 };

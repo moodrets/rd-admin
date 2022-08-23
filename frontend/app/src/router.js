@@ -1,21 +1,12 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import LayoutDefault from '@/layouts/LayoutDefault.vue';
 import NotFoundPage from '@/pages/NotFoundPage.vue';
-import MainPage from '@/pages/MainPage.vue';
-import ContactsPage from '@/pages/ContactsPage.vue';
+import SimplePage from '@/pages/SimplePage.vue';
+import { transformPagesToRoutes } from './api/getPages';
 
-const routes = [
-	{
-		path: '/',
-		component: LayoutDefault,
-		children: [
-			{ path: '/', component: MainPage },
-			{ path: '/contacts', component: ContactsPage },
-			// 404
-			{ path: '/:pathMatch(.*)*', component: NotFoundPage },
-		],
-	},
-];
+const routesFromAdmin = await transformPagesToRoutes(SimplePage);
+
+const routes = [...routesFromAdmin, { path: '/:pathMatch(.*)*', component: NotFoundPage }];
 
 const router = createRouter({
 	history: createWebHistory(),

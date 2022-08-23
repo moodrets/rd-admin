@@ -1,6 +1,6 @@
 <template>
 	<div class="centered">
-		<h1 class="text-4xl">404 - Page not found</h1>
+		<h1 class="text-3xl font-bold">404 - Страница не найдена</h1>
 	</div>
 </template>
 
