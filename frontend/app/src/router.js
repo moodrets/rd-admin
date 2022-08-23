@@ -1,19 +1,18 @@
 import { createWebHistory, createRouter } from 'vue-router';
-import NotFoundPage from './pages/NotFoundPage.vue';
+import LayoutDefault from '@/layouts/LayoutDefault.vue';
+import NotFoundPage from '@/pages/NotFoundPage.vue';
+import MainPage from '@/pages/MainPage.vue';
+import ContactsPage from '@/pages/ContactsPage.vue';
 
 const routes = [
 	{
 		path: '/',
-		name: 'main-module',
-	},
-	{
-		path: '/admin',
-		name: 'admin-module',
-		component: () => import('./modules/admin/AdminMain.vue'),
-	},
-	{
-		path: '*',
-		component: NotFoundPage,
+		component: LayoutDefault,
+		children: [
+			{ path: '/', component: MainPage },
+			{ path: '/contacts', component: ContactsPage },
+			{ path: '/:pathMatch(.*)*', component: NotFoundPage },
+		],
 	},
 ];
 

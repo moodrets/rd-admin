@@ -13,16 +13,20 @@ const isProd = process.argv.includes('production');
 
 module.exports = {
 	mode: isDev ? 'development' : 'production',
+	cache: false,
 	context: path.resolve(__dirname),
 	entry: { admin: `./src/admin.js` },
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: '[name].[contenthash].js',
+		filename: '[name].[hash].js',
 		clean: true,
 		publicPath: '/',
 	},
 	resolve: {
 		extensions: ['*', '.js', '.vue', 'scss', 'css'],
+		alias: {
+			'@': path.resolve(__dirname, 'src/'),
+		},
 	},
 	module: {
 		rules: [

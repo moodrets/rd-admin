@@ -1,19 +1,32 @@
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { VueLoaderPlugin } from 'vue-loader';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+const path = require('path');
+const { VueLoaderPlugin } = require('vue-loader');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const isDev = process.argv.includes('development');
+const isProd = process.argv.includes('production');
 
-export default {
-	entry: { main: './src/app.js' },
+// filename: (pathData) => {
+// 	return pathData.chunk.name === 'main' ? '[name].js' : '[name]/[name].js';
+// },
+
+module.exports = {
+	mode: isDev ? 'development' : 'production',
+	cache: false,
+	context: path.resolve(__dirname),
+	entry: { app: `./src/app.js` },
 	output: {
-		path: `${__dirname}/dist`,
-		filename: '[name].bundle.js',
+		path: path.resolve(__dirname, 'dist'),
+		filename: '[name].[hash].js',
+		clean: true,
+		publicPath: '/',
 	},
 	resolve: {
-		extensions: ['*', '.js', '.vue', 'scss'],
+		extensions: ['*', '.js', '.vue', 'scss', 'css'],
+		alias: {
+			'@': path.resolve(__dirname, 'src/'),
+		},
 	},
 	module: {
 		rules: [
@@ -22,42 +35,59 @@ export default {
 				use: 'vue-loader',
 			},
 			{
-				test: /\.js$/,
-				loader: 'babel-loader',
-				exclude: /node_modules/,
-			},
-			{
-				test: /\.m?js/,
-				type: 'javascript/auto',
-			},
-			{
-				test: /\.m?js/,
-				resolve: {
-					fullySpecified: false,
+				test: /\.m?js$/,
+				exclude: /(node_modules)/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ['@babel/preset-env'],
+					},
 				},
 			},
 			{
 				test: /\.css$/,
-				use: [MiniCssExtractPlugin.loader, 'vue-style-loader', 'css-loader'],
+				exclude: /(node_modules)/,
+				use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
 			},
 			{
-				test: /\.scss$/,
-				use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+				test: /\.(sa|sc|c)ss$/,
+				exclude: /(node_modules)/,
+				use: [
+					MiniCssExtractPlugin.loader,
+					{ loader: 'css-loader', options: { sourceMap: isDev ? true : false } },
+					{ loader: 'postcss-loader', options: { sourceMap: isDev ? true : false } },
+					{ loader: 'sass-loader', options: { sourceMap: isDev ? true : false } },
+				],
+			},
+			{
+				test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
+				type: 'asset',
 			},
 		],
 	},
 	plugins: [
 		new VueLoaderPlugin(),
-		new MiniCssExtractPlugin(),
+		new MiniCssExtractPlugin({
+			filename: '[name].bundle.css',
+		}),
 		new HtmlWebpackPlugin({
 			template: './index.html',
 		}),
+		new webpack.DefinePlugin({
+			__VUE_OPTIONS_API__: true,
+			__VUE_PROD_DEVTOOLS__: false,
+		}),
 	],
 	devServer: {
-		static: {
-			directory: __dirname + 'dist',
+		client: {
+			overlay: true,
+			progress: true,
 		},
+		static: {
+			directory: path.resolve(__dirname, 'dist'),
+		},
+		port: 1314,
 		compress: true,
-		port: 1395,
+		historyApiFallback: true,
 	},
 };

@@ -3,7 +3,7 @@ import router from './router.js';
 import Admin from './Admin.vue';
 
 // styles
-import './styles/main.scss';
+import './styles/admin.scss';
 
 const app = createApp({
 	render: () => h(Admin),
