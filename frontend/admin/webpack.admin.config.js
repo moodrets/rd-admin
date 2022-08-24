@@ -59,8 +59,8 @@ module.exports = {
 				],
 			},
 			{
-				test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-				type: 'asset',
+				test: /\.(woff|woff2|eot|ttf|otf)$/i,
+				type: 'asset/resource',
 			},
 		],
 	},
@@ -91,5 +91,8 @@ module.exports = {
 		port: devServerPort,
 		compress: true,
 		historyApiFallback: true,
+	},
+	experiments: {
+		topLevelAwait: true,
 	},
 };

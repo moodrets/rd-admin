@@ -1,5 +1,5 @@
 import { createApp, h } from 'vue';
-import router from './router.js';
+import router from './router/router.js';
 import Admin from './Admin.vue';
 
 // styles

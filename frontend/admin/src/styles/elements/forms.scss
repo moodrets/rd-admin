@@ -1,0 +1,18 @@
+.rd-input {
+	@apply rounded-lg;
+	width: 100%;
+	padding: 7px 14px;
+	border: 2px solid theme('colors.gray.600');
+	outline: none;
+	background: none;
+	color: theme('colors.white');
+	display: block;
+
+	&:focus {
+		border-color: theme('colors.blue.400');
+	}
+
+	&::placeholder {
+		color: theme('colors.gray.400');
+	}
+}

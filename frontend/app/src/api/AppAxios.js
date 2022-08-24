@@ -1,5 +1,5 @@
 import axios from 'axios';
 
-export const RDAxios = axios.create({
+export const AppAxios = axios.create({
 	baseURL: 'http://localhost:1346',
 });

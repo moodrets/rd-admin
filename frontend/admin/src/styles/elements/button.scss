@@ -1,0 +1,21 @@
+.rd-button {
+	outline: none;
+	padding: 6px 12px;
+	display: inline-flex;
+	align-items: center;
+	@apply rounded-md;
+	font-weight: bold;
+	background: none;
+
+	.material-icons {
+		font-size: 20px;
+	}
+
+	&--success {
+		background: theme('colors.green.700');
+
+		&:hover {
+			background: theme('colors.green.600');
+		}
+	}
+}

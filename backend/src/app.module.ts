@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Page } from 'src/entiry/Page';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Page } from 'src/modules/page/entity/Page';
+import { PageModule } from './modules/page/page.module';
 
 @Module({
 	imports: [
@@ -16,8 +16,12 @@ import { AppService } from './app.service';
 			entities: [Page],
 			synchronize: true,
 		}),
+		PageModule,
+		ConfigModule.forRoot({
+			envFilePath: '../../.env',
+		}),
 	],
-	controllers: [AppController],
-	providers: [AppService],
+	controllers: [],
+	providers: [],
 })
 export class AppModule {}
