@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { onBeforeMount, ref } from 'vue';
+import { ref } from 'vue';
 import PagesListComponent from '../../components/pages/List.vue';
 import { apiGetPages } from '../../api/apiGetPages';
 
@@ -23,9 +23,9 @@ export default {
 	setup() {
 		const pages = ref([]);
 
-		onBeforeMount(async () => {
+		const setPages = (async () => {
 			pages.value = await apiGetPages();
-		});
+		})();
 
 		return {
 			pages,
