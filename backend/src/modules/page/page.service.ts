@@ -28,7 +28,9 @@ export class PageService {
 	}
 
 	async getAll() {
-		return await this.pageRepository.find();
+		return await this.pageRepository.find({
+			take: 10,
+		});
 	}
 
 	async findPageByUrl(path: string): Promise<Page> {

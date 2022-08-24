@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
 import { CreatePageDto } from 'src/modules/page/dto/CreatePage.dto';
 import { PageService } from 'src/modules/page/page.service';
 
