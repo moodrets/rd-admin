@@ -1,7 +1,7 @@
 <template>
 	<app-header></app-header>
 	<section class="centered">
-		<h1 class="text-3xl font-bold">404 - Страница не найдена</h1>
+		<h1 class="text-3xl font-bold mb-8">404 - Страница не найдена</h1>
 	</section>
 	<app-footer></app-footer>
 </template>

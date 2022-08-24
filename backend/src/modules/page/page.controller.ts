@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Query } from '@nestjs/common';
 import { CreatePageDto } from 'src/modules/page/dto/CreatePage.dto';
 import { PageService } from 'src/modules/page/page.service';
 
@@ -7,9 +7,9 @@ export class PageController {
 	constructor(private readonly pageService: PageService) {}
 
 	@HttpCode(200)
-	@Get('get-routes')
-	async getRoutes() {
-		return await this.pageService.getRoutes();
+	@Get('get')
+	async getPageByUrlApp(@Query('path') path: string) {
+		return await this.pageService.getPageByUrlApp(path);
 	}
 
 	@HttpCode(200)

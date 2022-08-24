@@ -32,7 +32,7 @@ export class Page {
 	@Column({ type: 'longtext', nullable: true, default: null })
 	styles: string;
 
-	@Column({ type: 'longtext', nullable: true, default: null })
+	@Column({ type: 'json', nullable: true, default: null })
 	settings_json: string;
 
 	@Column({ type: 'boolean', default: false })

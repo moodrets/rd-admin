@@ -1,13 +1,13 @@
-import { IsBoolean, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsJSON, IsOptional, IsString } from 'class-validator';
 
 export class CreatePageDto {
 	@IsOptional()
 	@IsString()
-	page_title?: string;
+	page_title: string;
 
 	@IsOptional()
 	@IsString()
-	page_description?: string;
+	page_description: string;
 
 	@IsString()
 	path: string;
@@ -17,17 +17,21 @@ export class CreatePageDto {
 
 	@IsOptional()
 	@IsString()
-	template_filename?: string;
+	template_filename: string;
 
 	@IsOptional()
 	@IsString()
-	scripts?: string;
+	scripts: string;
 
 	@IsOptional()
 	@IsString()
-	styles?: string;
+	styles: string;
+
+	@IsOptional()
+	@IsJSON()
+	settings_json: string;
 
 	@IsOptional()
 	@IsBoolean()
-	hidden?: boolean;
+	hidden: boolean;
 }

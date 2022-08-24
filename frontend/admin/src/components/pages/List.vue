@@ -2,9 +2,9 @@
 	<div class="pages-list-item text-14px w-full text-gray-300">
 		<div class="flex text-16px font-bold">
 			<div class="border-b border-gray-300 p-2 w-1/12 flex-none">id</div>
-			<div class="border-b border-gray-300 p-2 flex-1">Заголовок</div>
-			<div class="border-b border-gray-300 p-2 flex-1">Путь (path)</div>
-			<div class="border-b border-gray-300 p-2 flex-1text-right">Действия</div>
+			<div class="border-b border-gray-300 p-2 w-4/12">Заголовок</div>
+			<div class="border-b border-gray-300 p-2 w-4/12">Путь (path)</div>
+			<div class="border-b border-gray-300 p-2 w-3/12 text-right">Действия</div>
 		</div>
 		<div
 			class="relative flex items-center hover:bg-gray-700 border-b border-gray-300"
@@ -15,13 +15,13 @@
 			<div class="py-1.5 px-3 w-1/12 flex-none font-bold">
 				{{ page.id }}
 			</div>
-			<div class="py-1.5 px-3 flex-1">
+			<div class="py-1.5 px-3 w-4/12">
 				{{ page.title }}
 			</div>
-			<div class="relative z-20 py-1.5 px-3 flex-1">
+			<div class="relative z-20 py-1.5 px-3 w-4/12">
 				{{ page.path }}
 			</div>
-			<div class="relative z-20 py-1.5 pl-3 flex-1">
+			<div class="relative z-20 py-1.5 pl-3 pr-1 w-3/12">
 				<div class="flex justify-end items-center space-x-3">
 					<router-link
 						class="flex-none border-2 border-blue-300 p-1 rounded-md cursor-pointer"

@@ -1,14 +1,13 @@
 <template>
 	<div class="pb-14">
-		<h1 class="text-2xl font-bold mb-6">Создание страницы</h1>
+		<h1 class="text-2xl font-bold mb-8">Создание страницы</h1>
 		<form @submit.prevent="submit($event)">
 			<div class="mb-6">
 				<input type="text" placeholder="Заголовок страницы" class="rd-input" />
-				<div class="text-14px mt-2">Будет отображаться в заголовке (H1)</div>
+				<div class="font-bold text-14px text-gray-300 mt-2">Будет отображаться в заголовке (H1)</div>
 			</div>
 			<div class="mb-6">
 				<input type="text" v-model="formPathValue" placeholder="Путь (url - /example)" class="rd-input" />
-				<div class="text-14px mt-2"></div>
 			</div>
 			<div class="fixed z-20 inset-x-0 bottom-0 py-4 flex justify-center shadow-md bg-gray-700">
 				<button type="submit" class="rd-button rd-button--success">

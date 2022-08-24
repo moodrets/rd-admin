@@ -12,33 +12,36 @@ export class PageService {
 		private pageRepository: Repository<Page>
 	) {}
 
-	async getRoutes(): Promise<Page[]> {
-		return await this.pageRepository.find({
-			select: {
-				path: true,
-				template_filename: true,
-				title: true,
-				page_title: true,
-				page_description: true,
-			},
-			where: {
-				hidden: false,
-			},
-		});
-	}
-
 	async getAll() {
 		return await this.pageRepository.find({
 			take: 10,
 		});
 	}
 
-	async findPageByUrl(path: string): Promise<Page> {
+	async getPageByUrlApp(path: string): Promise<Page> {
+		return await this.pageRepository.findOne({
+			select: {
+				title: true,
+				page_title: true,
+				page_description: true,
+				path: true,
+				template_filename: true,
+				scripts: true,
+				styles: true,
+				settings_json: true,
+			},
+			where: {
+				path,
+			},
+		});
+	}
+
+	async getPageByUrlAdmin(path: string): Promise<Page> {
 		return await this.pageRepository.findOneBy({ path });
 	}
 
 	async create(dto: CreatePageDto): Promise<Page> {
-		const existPage = await this.findPageByUrl(dto.path);
+		const existPage = await this.getPageByUrlAdmin(dto.path);
 		if (existPage) {
 			throw new HttpException(PAGE_URL_EXIST, HttpStatus.CONFLICT);
 		}
