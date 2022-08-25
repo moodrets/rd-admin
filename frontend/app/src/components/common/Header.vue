@@ -6,7 +6,6 @@
 				<router-link to="/">main</router-link>
 				<router-link to="/about">about</router-link>
 				<router-link to="/log">log</router-link>
-				<router-link to="/samsa">samsa</router-link>
 				<router-link to="/404">404</router-link>
 			</div>
 		</div>

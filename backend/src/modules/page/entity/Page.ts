@@ -23,7 +23,7 @@ export class Page {
 	@Column()
 	title: string;
 
-	@Column({ default: 'SimplePage' })
+	@Column({ default: 'BasePage' })
 	template_filename: string;
 
 	@Column({ type: 'longtext', nullable: true, default: null })

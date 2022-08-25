@@ -1,17 +1,28 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import { apiGetPageByUrl } from '../api/apiGetPageByUrl';
-import NotFoundPage from '@/pages/NotFoundPage.vue';
+import { setPageDescription, setPageTitle } from './pageSeo';
+import PageLayout from '@/layout/PageLayout';
 
 const router = createRouter({
 	history: createWebHistory(),
 	routes: [
-		{ path: '/:chapters*', component: () => import('@/pages/SimplePage') },
-		{ path: '/404', name: 'not-found-page', component: NotFoundPage },
+		{ path: '/:chapters*', name: 'base-page', component: PageLayout },
+		{ path: '/404', name: 'not-found-page', component: PageLayout },
 	],
 });
 
+const notFoundPageData = {
+	title: '404 - Страница не найдена',
+	page_title: '404 - Страница не найдена',
+	page_description: '404 - Страница не найдена',
+	template_filename: 'BasePage',
+};
+
 router.beforeEach(async (to, from, next) => {
 	if (to.path === '/404') {
+		to.meta = { ...notFoundPageData };
+		setPageTitle(to.meta);
+		setPageDescription(to.meta);
 		next();
 		return;
 	}
@@ -19,12 +30,9 @@ router.beforeEach(async (to, from, next) => {
 	const page = await apiGetPageByUrl(to.path);
 
 	if (page) {
-		document.title = page.page_title || page.title || '';
-		const descriptionTag = document.querySelector('meta[name="description"]');
-		descriptionTag && descriptionTag.setAttribute('content', page.page_description || '');
-		to.meta = {
-			...page,
-		};
+		to.meta = { ...page };
+		setPageTitle(to.meta);
+		setPageDescription(to.meta);
 		next();
 	}
 
