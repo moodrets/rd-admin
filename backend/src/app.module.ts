@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Page } from 'src/modules/page/entity/Page';
 import { PageModule } from './modules/page/page.module';
+import { MenuModule } from './modules/menu/menu.module';
 
 @Module({
 	imports: [
@@ -16,10 +17,11 @@ import { PageModule } from './modules/page/page.module';
 			entities: [Page],
 			synchronize: true,
 		}),
-		PageModule,
 		ConfigModule.forRoot({
 			envFilePath: '../../.env',
 		}),
+		PageModule,
+		MenuModule,
 	],
 	controllers: [],
 	providers: [],

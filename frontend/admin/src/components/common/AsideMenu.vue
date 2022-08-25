@@ -6,6 +6,12 @@
 			</span>
 			<span class="text-white">Страницы</span>
 		</router-link>
+		<router-link to="/menus" class="flex items-center text-blue-400" active-class="!text-white">
+			<span class="flex-none mr-2">
+				<i class="material-icons">menu</i>
+			</span>
+			<span class="text-white">Меню</span>
+		</router-link>
 		<router-link to="/blocks" class="flex items-center text-blue-400" active-class="!text-white">
 			<span class="flex-none mr-2">
 				<i class="material-icons">widgets</i>
