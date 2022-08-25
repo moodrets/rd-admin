@@ -48,9 +48,7 @@ export default {
 			},
 		});
 
-		const submit = (event) => {
-			console.log(event);
-		};
+		const submit = (event) => {};
 
 		return {
 			form,

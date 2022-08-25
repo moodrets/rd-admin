@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import { ref } from 'vue';
 import PagesListComponent from '../../components/pages/List.vue';
+import { ref } from 'vue';
 import { apiGetPages } from '../../api/apiGetPages';
 
 export default {
