@@ -5,6 +5,7 @@
 			<div class="flex space-x-5 font-bold">
 				<router-link to="/">main</router-link>
 				<router-link to="/about">about</router-link>
+				<router-link to="/test">test</router-link>
 				<router-link to="/log">log</router-link>
 				<router-link to="/404">404</router-link>
 			</div>

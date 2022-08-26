@@ -8,6 +8,9 @@ module.exports = {
 				'16px': '16px',
 				'18px': '18px',
 			},
+			minHeight: {
+				'250px': '250px',
+			},
 		},
 	},
 	plugins: [],

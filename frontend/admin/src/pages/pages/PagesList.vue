@@ -1,34 +1,41 @@
 <template>
 	<h1 class="text-2xl font-bold mb-8">Страницы</h1>
 	<div class="mb-6">
-		<router-link to="pages/create" class="rd-button rd-button--success">
-			<i class="material-icons mr-1">add</i>
+		<router-link :to="{ name: 'admin-page-create' }" class="rd-button rd-button--success">
+			<i class="rd-icon mr-1">add</i>
 			<span>Создать</span>
 		</router-link>
 	</div>
-	<admin-pages-list v-if="pages.length" :pages="pages"></admin-pages-list>
+	<pages-list @pageDeleted="onPageDeleted" v-if="pages.length" :pages="pages"></pages-list>
 	<div v-else class="font-bold text-18px">Нет созданных страниц</div>
 </template>
 
 <script>
-import PagesListComponent from '../../components/pages/List.vue';
 import { ref } from 'vue';
-import { apiGetPages } from '../../api/apiGetPages';
+import { apiGetPageList } from '@/api/apiGetPageList';
+import PagesListComponent from '@/components/pages/List.vue';
 
 export default {
-	name: 'admin-pages-component',
+	name: 'pages-component',
 	components: {
-		'admin-pages-list': PagesListComponent,
+		'pages-list': PagesListComponent,
 	},
-	setup() {
+	setup(props, context) {
 		const pages = ref([]);
 
-		const setPages = (async () => {
-			pages.value = await apiGetPages();
-		})();
+		const setData = async () => {
+			pages.value = await apiGetPageList();
+		};
+
+		setData();
+
+		const onPageDeleted = () => {
+			setData();
+		};
 
 		return {
 			pages,
+			onPageDeleted,
 		};
 	},
 };

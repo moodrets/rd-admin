@@ -1,46 +1,12 @@
 <template>
-	<div class="font-semibold flex flex-col space-y-3">
-		<router-link to="/pages" class="flex items-center text-blue-400" active-class="!text-white">
-			<span class="flex-none mr-2">
-				<i class="material-icons">web</i>
-			</span>
-			<span class="text-white">Страницы</span>
-		</router-link>
-		<router-link to="/menus" class="flex items-center text-blue-400" active-class="!text-white">
-			<span class="flex-none mr-2">
-				<i class="material-icons">menu</i>
-			</span>
-			<span class="text-white">Меню</span>
-		</router-link>
-		<router-link to="/blocks" class="flex items-center text-blue-400" active-class="!text-white">
-			<span class="flex-none mr-2">
-				<i class="material-icons">widgets</i>
-			</span>
-			<span class="text-white">Блоки</span>
-		</router-link>
-		<router-link to="/users" class="flex items-center text-blue-400" active-class="!text-white">
-			<span class="flex-none mr-2">
-				<i class="material-icons">group</i>
-			</span>
-			<span class="text-white">Пользователи</span>
-		</router-link>
-		<router-link to="/request" class="flex items-center text-blue-400" active-class="!text-white">
-			<span class="flex-none mr-2">
-				<i class="material-icons">assignment</i>
-			</span>
-			<span class="text-white">Заявки</span>
-		</router-link>
-		<router-link to="/form-constructor" class="flex items-center text-blue-400" active-class="!text-white">
-			<span class="flex-none mr-2">
-				<i class="material-icons">art_track</i>
-			</span>
-			<span class="text-white">Конструктор форм</span>
-		</router-link>
-		<router-link to="/settings" class="flex items-center text-blue-400" active-class="!text-white">
-			<span class="flex-none mr-2">
-				<i class="material-icons">settings</i>
-			</span>
-			<span class="text-white">Настройки</span>
+	<div class="rd-aside-menu">
+		<router-link v-for="link in links" :to="link.path" class="rd-aside-menu__item">
+			<i class="rd-aside-menu__item-mainicon rd-icon mr-2">{{ link.iconName }}</i>
+			<span class="text-white">{{ link.title }}</span>
+			<router-link v-if="link.addPath" :to="link.addPath" class="rd-aside-menu__item-add">
+				<i class="rd-icon">library_add</i>
+			</router-link>
+			<div v-else class="ml-auto"></div>
 		</router-link>
 	</div>
 </template>
@@ -48,5 +14,77 @@
 <script>
 export default {
 	name: 'aside-menu',
+	setup() {
+		const links = [
+			{
+				path: '/pages',
+				iconName: 'web',
+				addPath: '/pages/create',
+				title: 'Страницы',
+			},
+			{
+				path: '/menus',
+				iconName: 'view_headline',
+				addPath: '/menus/create',
+				title: 'Меню',
+			},
+			{
+				path: '/blocks',
+				iconName: 'widgets',
+				addPath: '/blocks/create',
+				title: 'Блоки',
+			},
+			{
+				path: '/users',
+				iconName: 'group',
+				addPath: '/users/create',
+				title: 'Пользователи',
+			},
+			{
+				path: '/forms',
+				iconName: 'art_track',
+				title: 'Формы',
+				addPath: '/forms/create',
+			},
+			{
+				path: '/modules',
+				iconName: 'settings_input_component',
+				title: 'Модули',
+				addPath: '/modules/create',
+			},
+			{
+				path: '/requests',
+				iconName: 'assignment',
+				title: 'Заявки',
+			},
+			{
+				path: '/settings',
+				iconName: 'settings',
+				title: 'Настройки',
+			},
+		];
+
+		return {
+			links,
+		};
+	},
 };
 </script>
+
+<style lang="scss">
+.rd-aside-menu {
+	@apply font-semibold flex flex-col space-y-4;
+
+	&__item {
+		@apply flex items-center justify-between text-blue-400 hover:text-white;
+
+		&-add {
+			@apply ml-auto text-white hover:border-blue-400 hover:text-blue-400;
+		}
+
+		&.is-active {
+			@apply text-white;
+		}
+	}
+}
+</style>

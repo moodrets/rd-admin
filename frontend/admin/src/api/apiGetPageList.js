@@ -1,7 +1,7 @@
 import { adminAxios } from './adminAxios';
 
-export async function apiGetPages() {
-	const res = await adminAxios.get('/page/get-all', {
+export async function apiGetPageList() {
+	const res = await adminAxios.get('/page/list', {
 		params: {
 			limit: 10,
 		},

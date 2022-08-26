@@ -1,6 +1,6 @@
 import { IsBoolean, IsJSON, IsOptional, IsString } from 'class-validator';
 
-export class CreatePageDto {
+export class CreateUpdatePageDto {
 	@IsOptional()
 	@IsString()
 	page_title: string;
@@ -11,6 +11,10 @@ export class CreatePageDto {
 
 	@IsString()
 	path: string;
+
+	@IsString()
+	@IsOptional()
+	redirect: string;
 
 	@IsString()
 	title: string;
@@ -29,7 +33,7 @@ export class CreatePageDto {
 
 	@IsOptional()
 	@IsJSON()
-	settings_json: string;
+	json_data: string;
 
 	@IsOptional()
 	@IsBoolean()

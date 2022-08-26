@@ -1,7 +1,7 @@
-import { AppAxios } from './AppAxios';
+import { appAxios } from './appAxios';
 
 export async function apiGetPageByUrl(path = '') {
-	const res = await AppAxios.get(`/page/get`, {
+	const res = await appAxios.get(`/page/byPath`, {
 		params: {
 			path,
 		},

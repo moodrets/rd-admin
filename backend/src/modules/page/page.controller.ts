@@ -1,5 +1,5 @@
-import { Body, Controller, Get, HttpCode, Post, Query } from '@nestjs/common';
-import { CreatePageDto } from 'src/modules/page/dto/CreatePage.dto';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Query } from '@nestjs/common';
+import { CreateUpdatePageDto } from 'src/modules/page/dto/CreateUpdatePage.dto';
 import { PageService } from 'src/modules/page/page.service';
 
 @Controller('page')
@@ -7,20 +7,32 @@ export class PageController {
 	constructor(private readonly pageService: PageService) {}
 
 	@HttpCode(200)
-	@Get('get')
-	async getPageByUrlApp(@Query('path') path: string) {
-		return await this.pageService.getPageByUrlApp(path);
+	@Get('byPath')
+	async getByPath(@Query('path') path: string) {
+		return await this.pageService.getByPath(path);
 	}
 
 	@HttpCode(200)
-	@Get('get-all')
-	async getAll() {
-		return await this.pageService.getAll();
+	@Get('byId/:id')
+	async getPageById(@Param('id') id: number) {
+		return await this.pageService.getPageById(id);
+	}
+
+	@HttpCode(200)
+	@Delete('byId/:id')
+	async delete(@Param('id') id: number) {
+		return await this.pageService.delete(id);
+	}
+
+	@HttpCode(200)
+	@Get('list')
+	async getList() {
+		return await this.pageService.getList();
 	}
 
 	@HttpCode(200)
 	@Post('create')
-	async createPage(@Body() dto: CreatePageDto) {
+	async createPage(@Body() dto: CreateUpdatePageDto) {
 		return await this.pageService.create(dto);
 	}
 }

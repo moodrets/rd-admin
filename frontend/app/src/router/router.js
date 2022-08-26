@@ -1,12 +1,12 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import { apiGetPageByUrl } from '../api/apiGetPageByUrl';
 import { setPageDescription, setPageTitle } from './pageSeo';
-import PageLayout from '@/layout/PageLayout';
+import PageLayout from '@/layouts/PageLayout';
 
 const router = createRouter({
 	history: createWebHistory(),
 	routes: [
-		{ path: '/:chapters*', name: 'base-page', component: PageLayout },
+		{ path: '/:chapters*', name: 'page-layout', component: PageLayout },
 		{ path: '/404', name: 'not-found-page', component: PageLayout },
 	],
 });
@@ -19,6 +19,7 @@ const notFoundPageData = {
 };
 
 router.beforeEach(async (to, from, next) => {
+	// 404
 	if (to.path === '/404') {
 		to.meta = { ...notFoundPageData };
 		setPageTitle(to.meta);
@@ -28,6 +29,12 @@ router.beforeEach(async (to, from, next) => {
 	}
 
 	const page = await apiGetPageByUrl(to.path);
+
+	// redirect
+	if (page && page.redirect) {
+		next(page.redirect);
+		return;
+	}
 
 	if (page) {
 		to.meta = { ...page };

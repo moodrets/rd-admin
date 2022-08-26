@@ -2,10 +2,11 @@
 	font-family: 'Material Icons';
 	font-style: normal;
 	font-weight: 400;
+	font-display: block;
 	src: url('../assets/material-icons.woff2') format('woff2');
 }
 
-.material-icons {
+.rd-icon {
 	display: block;
 	flex: none;
 	font-family: 'Material Icons';

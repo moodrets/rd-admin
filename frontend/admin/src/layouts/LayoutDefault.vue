@@ -5,7 +5,7 @@
 			<div class="w-1/5 hidden xl:block">
 				<aside-menu></aside-menu>
 			</div>
-			<div class="flex-1 xl:px-4">
+			<div class="min-w-0 flex-1 xl:pl-8">
 				<router-view></router-view>
 			</div>
 		</div>

@@ -20,6 +20,9 @@ export class Page {
 	@Column({ unique: true })
 	path: string;
 
+	@Column({ nullable: true, default: null })
+	redirect: string;
+
 	@Column()
 	title: string;
 
@@ -33,7 +36,7 @@ export class Page {
 	styles: string;
 
 	@Column({ type: 'json', nullable: true, default: null })
-	settings_json: string;
+	json_data: string;
 
 	@Column({ type: 'boolean', default: false })
 	hidden: boolean;

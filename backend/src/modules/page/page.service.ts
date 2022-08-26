@@ -1,8 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreatePageDto } from 'src/modules/page/dto/CreatePage.dto';
+import { CreateUpdatePageDto } from 'src/modules/page/dto/CreateUpdatePage.dto';
 import { Page } from 'src/modules/page/entity/Page';
-import { PAGE_URL_EXIST } from 'src/modules/page/messages/error-messages';
+import { PAGE_ID_NOT_FOUND, PAGE_NOT_FOUND, PAGE_URL_EXIST } from 'src/modules/page/messages/error-messages';
+import { PAGE_DELETED } from 'src/modules/page/messages/success-messages';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -12,13 +13,7 @@ export class PageService {
 		private pageRepository: Repository<Page>
 	) {}
 
-	async getAll() {
-		return await this.pageRepository.find({
-			take: 10,
-		});
-	}
-
-	async getPageByUrlApp(path: string): Promise<Page> {
+	async getByPath(path: string): Promise<Page> {
 		return await this.pageRepository.findOne({
 			select: {
 				title: true,
@@ -28,7 +23,8 @@ export class PageService {
 				template_filename: true,
 				scripts: true,
 				styles: true,
-				settings_json: true,
+				json_data: true,
+				redirect: true,
 			},
 			where: {
 				path,
@@ -36,15 +32,33 @@ export class PageService {
 		});
 	}
 
-	async getPageByUrlAdmin(path: string): Promise<Page> {
-		return await this.pageRepository.findOneBy({ path });
+	async getPageById(id: number): Promise<Page> {
+		const response = await this.pageRepository.findOneBy({ id });
+		if (response) {
+			return response;
+		}
+		throw new HttpException(PAGE_NOT_FOUND, HttpStatus.NOT_FOUND);
 	}
 
-	async create(dto: CreatePageDto): Promise<Page> {
-		const existPage = await this.getPageByUrlAdmin(dto.path);
-		if (existPage) {
+	async getList() {
+		return await this.pageRepository.find({
+			take: 10,
+		});
+	}
+
+	async create(dto: CreateUpdatePageDto): Promise<Page> {
+		const response = await this.getByPath(dto.path);
+		if (response) {
 			throw new HttpException(PAGE_URL_EXIST, HttpStatus.CONFLICT);
 		}
 		return await this.pageRepository.save(dto);
+	}
+
+	async delete(id: number) {
+		const response = await this.pageRepository.delete({ id });
+		if (!response.affected) {
+			throw new HttpException(PAGE_ID_NOT_FOUND, HttpStatus.NOT_FOUND);
+		}
+		throw new HttpException(PAGE_DELETED, HttpStatus.OK);
 	}
 }

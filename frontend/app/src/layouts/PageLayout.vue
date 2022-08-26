@@ -8,15 +8,18 @@ import { useRoute } from 'vue-router';
 
 export default {
 	name: 'simple-page',
-	setup(props, ctx) {
+	setup() {
 		const loadTemplate = shallowRef(null);
 		const pageData = ref({});
-		pageData.value = useRoute().meta;
-		loadTemplate.value = defineAsyncComponent(() => import(`@/pages/${pageData.value.template_filename}.vue`));
 
-		onBeforeUpdate(() => {
+		const setPageData = () => {
 			pageData.value = useRoute().meta;
 			loadTemplate.value = defineAsyncComponent(() => import(`@/pages/${pageData.value.template_filename}.vue`));
+		};
+		setPageData();
+
+		onBeforeUpdate(() => {
+			setPageData();
 		});
 
 		return {
