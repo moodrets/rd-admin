@@ -8,6 +8,7 @@
 <script>
 import { reactive } from 'vue';
 import PageForm from '@/components/pages/PageForm.vue';
+import { Page } from '@/models/pages/PageModel';
 
 export default {
 	name: 'create-page-component',
@@ -15,18 +16,7 @@ export default {
 		'page-form': PageForm,
 	},
 	setup() {
-		const formFields = reactive({
-			title: '',
-			path: '',
-			redirect: '',
-			page_title: '',
-			page_description: '',
-			template_filename: '',
-			scripts: '',
-			styles: '',
-			json_data: '',
-			hidden: false,
-		});
+		const formFields = reactive(new Page());
 
 		return {
 			formFields,

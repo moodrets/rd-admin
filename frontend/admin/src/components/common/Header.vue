@@ -7,7 +7,7 @@
 			</router-link>
 			<div class="flex">
 				<div class="flex-none cursor-pointer">
-					<i class="rd-icon">notifications</i>
+					<i class="rd-icon text-3xl">account_circle</i>
 				</div>
 			</div>
 		</div>

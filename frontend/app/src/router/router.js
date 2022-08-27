@@ -2,12 +2,13 @@ import { createWebHistory, createRouter } from 'vue-router';
 import { setPageDescription, setPageTitle } from '@/router/pageSeo';
 import { checkLocalDomain } from '@/router/urlHelpers';
 import { apiGetPageByUrl } from '@/api/apiGetPageByUrl';
+import PageLayout from '@/layouts/PageLayout.vue';
 
 const router = createRouter({
 	history: createWebHistory(),
 	routes: [
-		{ path: '/:chapters*', name: 'page-layout', component: import('@/layouts/PageLayout.vue') },
-		{ path: '/404', name: 'not-found-page', component: import('@/layouts/PageLayout.vue') },
+		{ path: '/:chapters*', name: 'page-layout', component: PageLayout },
+		{ path: '/404', name: 'not-found-page', component: PageLayout },
 	],
 });
 

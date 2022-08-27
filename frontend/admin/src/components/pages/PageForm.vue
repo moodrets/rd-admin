@@ -61,7 +61,6 @@
 		</div>
 		<div class="fixed z-20 inset-x-0 bottom-0 py-4 flex justify-center shadow-md bg-gray-700">
 			<button type="submit" class="rd-button rd-button--success" :class="{ 'rd-button--loading': loading }">
-				<i class="rd-icon mr-1">add</i>
 				<span>{{ actionType === 'edit' ? 'Редактировать' : 'Создать' }}</span>
 			</button>
 		</div>

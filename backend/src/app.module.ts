@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Page } from 'src/modules/page/entity/Page';
 import { PageModule } from './modules/page/page.module';
 import { MenuModule } from './modules/menu/menu.module';
+
+// db tables
+import { Page } from 'src/modules/page/entity/Page';
+import { Menu } from 'src/modules/menu/entity/Menu';
+import { MenuItem } from 'src/modules/menu/entity/MenuItem';
 
 @Module({
 	imports: [
@@ -14,7 +18,7 @@ import { MenuModule } from './modules/menu/menu.module';
 			username: 'root',
 			password: 'root',
 			database: 'rd_admin',
-			entities: [Page],
+			entities: [Page, Menu, MenuItem],
 			synchronize: true,
 		}),
 		ConfigModule.forRoot({

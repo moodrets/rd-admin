@@ -4,7 +4,7 @@
 			<i class="rd-aside-menu__item-mainicon rd-icon mr-2">{{ link.iconName }}</i>
 			<span class="text-white">{{ link.title }}</span>
 			<router-link v-if="link.addPath" :to="link.addPath" class="rd-aside-menu__item-add">
-				<i class="rd-icon">library_add</i>
+				<i class="rd-icon">{{ link.addIcon ? link.addIcon : 'library_add' }}</i>
 			</router-link>
 			<div v-else class="ml-auto"></div>
 		</router-link>
@@ -23,22 +23,29 @@ export default {
 				title: 'Страницы',
 			},
 			{
+				path: '/blocks',
+				iconName: 'widgets',
+				addPath: '/blocks/create',
+				title: 'Данные страниц',
+			},
+			{
 				path: '/menus',
 				iconName: 'view_headline',
 				addPath: '/menus/create',
 				title: 'Меню',
 			},
-			{
-				path: '/blocks',
-				iconName: 'widgets',
-				addPath: '/blocks/create',
-				title: 'Блоки',
-			},
+
 			{
 				path: '/users',
-				iconName: 'group',
+				iconName: 'account_box',
 				addPath: '/users/create',
 				title: 'Пользователи',
+			},
+			{
+				path: '/users/groups',
+				iconName: 'group',
+				addPath: '/users/groups/create',
+				title: 'Группы пользователей',
 			},
 			{
 				path: '/forms',
@@ -73,7 +80,7 @@ export default {
 
 <style lang="scss">
 .rd-aside-menu {
-	@apply font-semibold flex flex-col space-y-4;
+	@apply font-semibold flex flex-col space-y-5;
 
 	&__item {
 		@apply flex items-center justify-between text-blue-400 hover:text-white;

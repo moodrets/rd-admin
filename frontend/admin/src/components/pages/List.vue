@@ -4,8 +4,8 @@
 			<div class="border-b border-gray-300 p-2 w-1/12 flex-none">id</div>
 			<div class="border-b border-gray-300 p-2 w-3/12">Заголовок</div>
 			<div class="border-b border-gray-300 p-2 w-3/12">Путь (path)</div>
-			<div class="border-b border-gray-300 p-2 w-2/12">Редирект</div>
-			<div class="border-b border-gray-300 p-2 w-3/12 text-right">Действия</div>
+			<div class="border-b border-gray-300 p-2 w-3/12">Редирект</div>
+			<div class="border-b border-gray-300 p-2 w-2/12 text-right">Действия</div>
 		</div>
 		<div
 			class="relative flex items-center hover:bg-gray-700 border-b border-gray-300"
@@ -23,33 +23,46 @@
 			<div class="py-1.5 px-3 w-3/12">
 				{{ page.title }}
 			</div>
-			<div class="relative z-20 py-1.5 px-3 w-3/12">
-				{{ page.path }}
+			<div class="py-1.5 px-3 w-3/12">
+				<div class="relative z-20">{{ page.path }}</div>
 			</div>
-			<div class="relative z-20 py-1.5 px-3 w-2/12">
+			<div class="py-1.5 px-3 w-3/12">
 				{{ page.redirect }}
 			</div>
-			<div class="relative z-20 py-1.5 pl-3 pr-1 w-3/12">
+			<div class="relative z-20 py-1.5 pl-3 pr-1 w-2/12">
 				<div class="flex justify-end items-center space-x-3">
+					<div class="flex-none text-stone-400 p-1 rounded-md cursor-pointer" data-rd-tooltip="Открыть">
+						<i class="rd-icon block">open_in_new</i>
+					</div>
 					<div
-						class="flex-none border-2 border-blue-300 p-1 rounded-md cursor-pointer"
+						v-if="page.hidden"
+						class="flex-none text-blue-400 p-1 rounded-md cursor-pointer"
 						data-rd-tooltip="Открыть"
+						@click="emitVisiblePage(page)"
 					>
-						<i class="rd-icon text-blue-300 block text-18px">open_in_new</i>
+						<i class="rd-icon block">visibility</i>
+					</div>
+					<div
+						v-else
+						class="flex-none text-amber-400 p-1 rounded-md cursor-pointer"
+						data-rd-tooltip="Скрыть"
+						@click="emitHiddenPage(page)"
+					>
+						<i class="rd-icon block">visibility_off</i>
 					</div>
 					<router-link
-						class="flex-none border-2 border-green-400 p-1 rounded-md cursor-pointer"
+						class="flex-none text-green-400 p-1 rounded-md cursor-pointer"
 						data-rd-tooltip="Редактировать"
 						:to="{ name: 'admin-page-edit', params: { id: page.id } }"
 					>
-						<i class="rd-icon text-green-400 block text-18px">edit</i>
+						<i class="rd-icon block">edit</i>
 					</router-link>
 					<div
-						class="flex-none border-2 border-rose-400 p-1 rounded-md cursor-pointer"
+						class="flex-none text-rose-500 p-1 rounded-md cursor-pointer"
 						data-rd-tooltip="Удалить"
-						@click="deletePage(page)"
+						@click="emitPageDelete(page)"
 					>
-						<i class="rd-icon text-rose-400 block text-18px">delete</i>
+						<i class="rd-icon block">delete</i>
 					</div>
 				</div>
 			</div>
@@ -66,13 +79,21 @@ export default {
 			required: true,
 		},
 	},
-	emits: ['pageDelete'],
+	emits: ['emitPageDelete', 'emitVisiblePage', 'emitHiddenPage'],
 	setup(props, context) {
-		const deletePage = (page) => {
-			context.emit('pageDelete', page);
+		const emitPageDelete = (page) => {
+			context.emit('emitPageDelete', page);
+		};
+		const emitVisiblePage = (page) => {
+			context.emit('emitVisiblePage', page);
+		};
+		const emitHiddenPage = (page) => {
+			context.emit('emitHiddenPage', page);
 		};
 		return {
-			deletePage,
+			emitPageDelete,
+			emitVisiblePage,
+			emitHiddenPage,
 		};
 	},
 };

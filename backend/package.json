@@ -7,11 +7,11 @@
 	"license": "UNLICENSED",
 	"scripts": {
 		"backend:prebuild": "rimraf dist",
-		"backend:build": "nest build",
 		"backend:format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+		"backend:serve": "nest start --watch",
 		"backend:start": "nest start",
-		"backend:dev": "nest start --watch",
 		"backend:debug": "nest start --debug --watch",
+		"backend:build": "nest build",
 		"backend:prod": "node dist/main",
 		"backend:lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
 		"backend:test": "jest",

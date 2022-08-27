@@ -2,7 +2,7 @@
 	<admin-header></admin-header>
 	<div class="centered">
 		<div class="flex">
-			<div class="w-1/5 hidden xl:block">
+			<div class="w-1/4 hidden xl:block">
 				<aside-menu></aside-menu>
 			</div>
 			<div class="min-w-0 flex-1 xl:pl-8">

@@ -1,9 +1,9 @@
 export class RDToast {
 	#canvas = null;
 	#classNames = {
+		canvas: 'rd-toast-canvas',
 		item: 'rd-toast-item',
 		container: 'rd-toast-container',
-		canvas: 'rd-toast-canvas',
 	};
 	constructor(options) {
 		this.settings = {
@@ -11,7 +11,8 @@ export class RDToast {
 			type: 'info',
 			position: 'bottom-right',
 			customToastClass: '',
-			duration: 3500,
+			duration: 5000,
+			hideOnClick: false,
 			...options,
 		};
 		this.init();
@@ -47,9 +48,14 @@ export class RDToast {
 		toast.classList.add(...toastClassList);
 		toast.innerHTML = `<span>${text}</span>`;
 		options.icon && toast.insertAdjacentHTML('afterbegin', options.icon);
-		setTimeout(() => {
+		const timeout = setTimeout(() => {
 			toast.remove();
 		}, options.duration);
+		options.hideOnClick &&
+			toast.addEventListener('click', (e) => {
+				clearTimeout(timeout);
+				toast.remove();
+			});
 		return toast;
 	}
 

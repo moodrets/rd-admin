@@ -1,4 +1,4 @@
-export const toastConfig = {
+export const VueDKToastConfig = {
 	duration: 3500,
 	pauseOnHover: true,
 	class: 'rd-toast',

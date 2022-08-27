@@ -6,7 +6,13 @@
 			<span>Создать</span>
 		</router-link>
 	</div>
-	<pages-list @pageDelete="onPageDelete($event)" v-if="pages.length" :pages="pages"></pages-list>
+	<pages-list
+		v-if="pages.length"
+		@emitVisiblePage="onVisiblePage($event)"
+		@emitHiddenPage="onHiddenPage($event)"
+		@emitPageDelete="onDeletePage($event)"
+		:pages="pages"
+	></pages-list>
 	<div v-else class="font-bold text-18px">Нет созданных страниц</div>
 </template>
 
@@ -14,6 +20,7 @@
 import { ref } from 'vue';
 import { apiGetPageList } from '@/api/page/apiGetPageList';
 import { apiDeletePage } from '@/api/page/apiDeletePage';
+import { apiUpdatePage } from '@/api/page/apiUpdatePage';
 import PagesListComponent from '@/components/pages/List.vue';
 
 export default {
@@ -29,18 +36,36 @@ export default {
 
 		loadData();
 
-		const onPageDelete = async (page) => {
+		const onDeletePage = async (page) => {
 			if (confirm(`Вы уверены что хотите удалить страницу - ${page.title}`)) {
 				try {
-					await apiDeletePage(page.id);
+					await apiDeletePage(page);
 					loadData();
 				} catch (e) {}
 			}
 		};
 
+		const onVisiblePage = async (page) => {
+			page.hidden = false;
+			try {
+				await apiUpdatePage(page);
+				loadData();
+			} catch (e) {}
+		};
+
+		const onHiddenPage = async (page) => {
+			page.hidden = true;
+			try {
+				await apiUpdatePage(page);
+				loadData();
+			} catch (e) {}
+		};
+
 		return {
 			pages,
-			onPageDelete,
+			onHiddenPage,
+			onVisiblePage,
+			onDeletePage,
 		};
 	},
 };

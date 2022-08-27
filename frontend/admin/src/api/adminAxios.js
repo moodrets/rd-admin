@@ -1,11 +1,10 @@
 import axios from 'axios';
-import { RDToast } from '@/plugins/toast/RDToast';
+import { RDToast } from '../../../shared/plugins/rd-toast/RDToast';
+const toast = new RDToast();
 
 export const adminAxios = axios.create({
 	baseURL: 'http://localhost:1346',
 });
-
-const toast = new RDToast();
 
 adminAxios.interceptors.response.use(
 	(res) => {

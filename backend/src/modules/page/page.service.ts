@@ -28,6 +28,7 @@ export class PageService {
 			},
 			where: {
 				path,
+				hidden: false,
 			},
 		});
 	}
@@ -42,7 +43,7 @@ export class PageService {
 
 	async getList() {
 		return await this.pageRepository.find({
-			take: 10,
+			take: 20,
 		});
 	}
 
