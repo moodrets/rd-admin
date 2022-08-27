@@ -1,4 +1,4 @@
-import { adminAxios } from './adminAxios';
+import { adminAxios } from '@/api/adminAxios';
 
 export async function apiGetPageList() {
 	const res = await adminAxios.get('/page/list', {

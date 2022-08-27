@@ -1,0 +1,58 @@
+.rd-admin-body {
+	.dk__toast-container {
+		@apply text-black;
+		width: auto;
+		height: auto;
+		right: 0;
+		bottom: 0;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+
+		.dk__toast-section {
+			align-items: flex-end;
+			@apply space-y-3;
+		}
+	}
+
+	.dk__toast-mobile-container {
+		width: 100%;
+		height: auto;
+		@apply text-black;
+		right: 0;
+		bottom: 0;
+
+		.dk__toast-mobile-section {
+			@apply space-y-3;
+		}
+	}
+
+	.rd-toast.dk__toast {
+		min-width: auto;
+		@apply shadow-lg flex items-center px-5;
+		font-weight: bold;
+		margin: 0;
+
+		&:hover {
+			opacity: 1;
+		}
+
+		.dk__icon-left {
+			position: static;
+			flex: none;
+			padding: 0;
+			margin-right: 10px;
+		}
+
+		&.dk__success {
+			@apply bg-green-600;
+		}
+
+		&.dk__error {
+			@apply bg-rose-600;
+		}
+
+		&.dk__passive {
+			@apply bg-blue-600;
+		}
+	}
+}

@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 
+// libs
+@import '@/plugins/toast/rd-toast.scss';
+
 // base
 @import './base/icons.scss';
 @import './base/animations.scss';
@@ -10,5 +13,6 @@
 @import './elements/button.scss';
 @import './elements/tooltip.scss';
 @import './elements/forms.scss';
+@import './elements/toast.scss';
 
 @tailwind utilities;

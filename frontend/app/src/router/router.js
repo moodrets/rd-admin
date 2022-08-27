@@ -1,13 +1,13 @@
 import { createWebHistory, createRouter } from 'vue-router';
-import { apiGetPageByUrl } from '../api/apiGetPageByUrl';
-import { setPageDescription, setPageTitle } from './pageSeo';
-import PageLayout from '@/layouts/PageLayout';
+import { setPageDescription, setPageTitle } from '@/router/pageSeo';
+import { checkLocalDomain } from '@/router/urlHelpers';
+import { apiGetPageByUrl } from '@/api/apiGetPageByUrl';
 
 const router = createRouter({
 	history: createWebHistory(),
 	routes: [
-		{ path: '/:chapters*', name: 'page-layout', component: PageLayout },
-		{ path: '/404', name: 'not-found-page', component: PageLayout },
+		{ path: '/:chapters*', name: 'page-layout', component: import('@/layouts/PageLayout.vue') },
+		{ path: '/404', name: 'not-found-page', component: import('@/layouts/PageLayout.vue') },
 	],
 });
 
@@ -30,9 +30,15 @@ router.beforeEach(async (to, from, next) => {
 
 	const page = await apiGetPageByUrl(to.path);
 
-	// redirect
-	if (page && page.redirect) {
+	// redirect local
+	if (page && page.redirect && checkLocalDomain(page.redirect)) {
 		next(page.redirect);
+		return;
+	}
+
+	// redirect other domain
+	if (page && page.redirect && !checkLocalDomain(page.redirect)) {
+		window.location.href = page.redirect;
 		return;
 	}
 
@@ -41,6 +47,7 @@ router.beforeEach(async (to, from, next) => {
 		setPageTitle(to.meta);
 		setPageDescription(to.meta);
 		next();
+		return;
 	}
 
 	if (!page) {

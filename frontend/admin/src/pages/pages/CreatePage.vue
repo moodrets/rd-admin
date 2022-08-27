@@ -1,5 +1,5 @@
 <template>
-	<div class="pb-20">
+	<div class="pb-24">
 		<h1 class="text-2xl font-bold mb-8">Создание страницы</h1>
 		<page-form :formFields="formFields" actionType="create"></page-form>
 	</div>

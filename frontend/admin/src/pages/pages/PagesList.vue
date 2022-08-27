@@ -6,13 +6,14 @@
 			<span>Создать</span>
 		</router-link>
 	</div>
-	<pages-list @pageDeleted="onPageDeleted" v-if="pages.length" :pages="pages"></pages-list>
+	<pages-list @pageDelete="onPageDelete($event)" v-if="pages.length" :pages="pages"></pages-list>
 	<div v-else class="font-bold text-18px">Нет созданных страниц</div>
 </template>
 
 <script>
 import { ref } from 'vue';
-import { apiGetPageList } from '@/api/apiGetPageList';
+import { apiGetPageList } from '@/api/page/apiGetPageList';
+import { apiDeletePage } from '@/api/page/apiDeletePage';
 import PagesListComponent from '@/components/pages/List.vue';
 
 export default {
@@ -22,20 +23,24 @@ export default {
 	},
 	setup(props, context) {
 		const pages = ref([]);
-
-		const setData = async () => {
+		const loadData = async () => {
 			pages.value = await apiGetPageList();
 		};
 
-		setData();
+		loadData();
 
-		const onPageDeleted = () => {
-			setData();
+		const onPageDelete = async (page) => {
+			if (confirm(`Вы уверены что хотите удалить страницу - ${page.title}`)) {
+				try {
+					await apiDeletePage(page.id);
+					loadData();
+				} catch (e) {}
+			}
 		};
 
 		return {
 			pages,
-			onPageDeleted,
+			onPageDelete,
 		};
 	},
 };

@@ -1,4 +1,4 @@
-import { adminAxios } from './adminAxios';
+import { adminAxios } from '@/api/adminAxios';
 
 export async function apiCreatePage(data) {
 	const res = await adminAxios.post('/page/create', { ...data });

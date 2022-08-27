@@ -1,91 +1,62 @@
 <template>
-	<form @submit.prevent="formSubmit($event)" :class="{ 'opacity-60 pointer-events-none': loading }">
-		<div class="xl:flex xl:gap-6">
-			<div class="mb-6 xl:w-1/2">
-				<input
-					type="text"
-					v-model="formPathValue"
-					placeholder="Путь (url - /example)"
-					class="rd-form-control"
-					required
-					ref="pathInput"
-				/>
-			</div>
-			<div class="mb-6 xl:w-1/2">
-				<input
-					type="text"
-					v-model="formRedirectValue"
-					placeholder="Редирект (url - /example)"
-					class="rd-form-control"
-				/>
-			</div>
-		</div>
-		<div class="mb-6">
+	<form
+		@submit.prevent="formSubmit($event)"
+		:class="{ 'opacity-60 pointer-events-none': loading }"
+		class="grid grid-cols-1 gap-6 xl:grid-cols-2"
+	>
+		<label>
+			<div class="mb-3 text-gray-400 font-bold text-14px">Путь (url - /example)</div>
 			<input
 				type="text"
-				v-model="formFields.title"
-				placeholder="Заголовок страницы - (H1)"
+				@input="onPathInput($event)"
+				:value="formFields.path"
 				class="rd-form-control"
 				required
+				ref="firstInputRef"
 			/>
-		</div>
-		<div class="mb-6">
-			<input
-				type="text"
-				v-model="formFields.template_filename"
-				placeholder="Файл шаблона (BasePage - по умолчанию)"
-				class="rd-form-control"
-			/>
-		</div>
-		<div class="xl:flex xl:gap-6">
-			<div class="mb-6 xl:w-1/2">
-				<textarea
-					v-model="formFields.scripts"
-					rows="6"
-					class="rd-form-control resize-y"
-					placeholder="Скрипты <script>...<script>"
-				></textarea>
+		</label>
+		<label>
+			<div class="mb-3 text-gray-400 font-bold text-14px">Заголовок страницы - (H1)</div>
+			<input type="text" v-model="formFields.title" class="rd-form-control" required />
+		</label>
+		<label>
+			<div class="mb-3 text-gray-400 font-bold text-14px">Редирект</div>
+			<input type="text" v-model="formFields.redirect" class="rd-form-control" />
+		</label>
+		<label>
+			<div class="mb-3 text-gray-400 font-bold text-14px">Файл шаблона (BasePage - по умолчанию)</div>
+			<input type="text" v-model="formFields.template_filename" class="rd-form-control" />
+		</label>
+		<label class="xl:col-span-2">
+			<div class="mb-3 text-gray-400 font-bold text-14px">{{ 'Данные JSON {"some": "value"}' }}</div>
+			<textarea v-model="formFields.json_data" rows="6" class="rd-form-control resize-y"></textarea>
+		</label>
+		<label>
+			<div class="mb-3 text-gray-400 font-bold text-14px">{{ 'Title страницы (<title></title>)' }}</div>
+			<input type="text" v-model="formFields.page_title" class="rd-form-control" />
+		</label>
+		<label>
+			<div class="mb-3 text-gray-400 font-bold text-14px">
+				{{ 'Description страницы (&#60;meta name="description" /&#62;)' }}
 			</div>
-			<div class="mb-6 xl:w-1/2">
-				<textarea
-					v-model="formFields.styles"
-					rows="6"
-					class="rd-form-control resize-y"
-					placeholder='Стили <style>...<style> или <link href="...">'
-				></textarea>
+			<input type="text" v-model="formFields.page_description" class="rd-form-control" />
+		</label>
+		<label>
+			<div class="mb-3 text-gray-400 font-bold text-14px">
+				{{ 'Скрипты &#60;script&#62;...&#60;/script&#62;' }}
 			</div>
-		</div>
-		<div class="mb-6">
-			<textarea
-				v-model="formJsonDataParsedValue"
-				rows="6"
-				class="rd-form-control resize-y"
-				placeholder='Данные JSON {"some": "value"}'
-			></textarea>
-		</div>
-		<div class="mb-6">
-			<div class="text-3px font-bold text-blue-500 mb-2">SEO</div>
-			<div class="mb-6">
-				<input
-					type="text"
-					v-model="formFields.page_title"
-					placeholder="Title страницы (<title></title>)"
-					class="rd-form-control"
-				/>
+			<textarea v-model="formFields.scripts" rows="6" class="rd-form-control resize-y"></textarea>
+		</label>
+		<label>
+			<div class="mb-3 text-gray-400 font-bold text-14px">
+				{{ 'Стили &#60;style&#62;...&#60;style&#62; или &#60;link href="..." /&#62;' }}
 			</div>
-			<div class="mb-6">
-				<input
-					type="text"
-					v-model="formFields.page_description"
-					placeholder='Description страницы (<meta name="description" content="..." />)'
-					class="rd-form-control"
-				/>
-			</div>
-		</div>
-		<div class="mb-6 select-none">
+			<textarea v-model="formFields.styles" rows="6" class="rd-form-control resize-y"></textarea>
+		</label>
+		<div class="select-none">
 			<label class="inline-flex items-center">
 				<input type="checkbox" v-model="formFields.hidden" class="flex-none mr-2 w-6 h-5" />
-				<div class="">Скрыть (Не будет индексироваться)</div>
+				<div>Скрыть (Не будет и отображаться на сайте)</div>
 			</label>
 		</div>
 		<div class="fixed z-20 inset-x-0 bottom-0 py-4 flex justify-center shadow-md bg-gray-700">
@@ -98,9 +69,11 @@
 </template>
 
 <script>
-import { computed, onMounted, ref } from 'vue';
-import { apiCreatePage } from '@/api/apiCreatePage';
+import { onMounted, ref } from 'vue';
+import { apiCreatePage } from '@/api/page/apiCreatePage';
+import { apiUpdatePage } from '@/api/page/apiUpdatePage';
 import { useRouter } from 'vue-router';
+import { CREATE_UPDATE_URL_REGEXP } from '@/regexp/urlRegexp';
 
 export default {
 	props: {
@@ -114,82 +87,72 @@ export default {
 			required: true,
 		},
 	},
-	setup({ formFields }, context) {
+	setup({ formFields, actionType }, context) {
 		const router = useRouter();
 		const loading = ref(false);
-		const pathInput = ref(null);
+		const firstInputRef = ref(null);
 
-		const formPathValue = computed({
-			get: () => formFields.path,
-			set: (val) => {
-				if (val === '/') {
-					formFields.path = val;
-					return;
-				}
-				if (formFields.path.startsWith('/')) {
-					formFields.path = val;
-					return;
-				}
-				formFields.path = `/${val}`;
-			},
-		});
+		if (actionType === 'edit' && formFields.json_data) {
+			formFields.json_data = JSON.stringify(formFields.json_data);
+		}
 
-		const formRedirectValue = computed({
-			get: () => formFields.redirect,
-			set: (val) => {
-				if (val === '/') {
-					formFields.redirect = val;
-					return;
-				}
-				if (formFields.redirect.startsWith('/')) {
-					formFields.redirect = val;
-					return;
-				}
-				formFields.redirect = `/${val}`;
-			},
-		});
-
-		const formJsonDataParsedValue = computed(() => {
-			if (formFields.json_data) {
-				return JSON.stringify(formFields.json_data, null, 2);
+		const urlParser = (string) => {
+			let finalValue = string.toLowerCase();
+			if (finalValue.startsWith('/')) {
+				return finalValue;
 			}
-			return '';
-		});
+			return `/${finalValue}`;
+		};
+
+		const onPathInput = (event) => {
+			formFields.path = urlParser(event.target.value);
+		};
 
 		const formSubmit = async (event) => {
-			loading.value = true;
 			const formData = {
 				...formFields,
 			};
 
-			formData.path !== '/' && (formData.path = formData.path.replace(/\/+$/g, ''));
+			formData.path !== '/' && (formData.path = formData.path.replace(CREATE_UPDATE_URL_REGEXP, ''));
 			!formData.redirect && delete formData.redirect;
 			!formData.template_filename && delete formData.template_filename;
 			!formData.json_data && delete formData.json_data;
 			!formData.styles && delete formData.styles;
 			!formData.scripts && delete formData.scripts;
+			delete formData.created_at;
+			delete formData.updated_at;
 
-			try {
-				const res = await apiCreatePage(formData);
-				router.push({ name: 'admin-pages' });
-			} catch (e) {
-				console.log(e);
-			} finally {
-				loading.value = false;
+			if (actionType === 'create') {
+				loading.value = true;
+				try {
+					await apiCreatePage(formData);
+					router.push({ name: 'admin-pages' });
+				} catch (e) {
+				} finally {
+					loading.value = false;
+				}
+			}
+
+			if (actionType === 'edit' && confirm(`Уверены что хотите обновить страницу - ${formData.title}`)) {
+				loading.value = true;
+				try {
+					await apiUpdatePage(formData);
+				} catch (e) {
+				} finally {
+					loading.value = false;
+				}
 			}
 		};
 
 		onMounted(() => {
-			pathInput.value.focus();
+			firstInputRef.value.focus();
 		});
 
 		return {
 			loading,
 			formSubmit,
-			formPathValue,
-			formRedirectValue,
-			formJsonDataParsedValue,
-			pathInput,
+			firstInputRef,
+			onPathInput,
 		};
 	},
 };

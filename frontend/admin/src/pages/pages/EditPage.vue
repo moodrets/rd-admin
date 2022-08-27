@@ -1,5 +1,5 @@
 <template>
-	<div class="pb-20 min-h-250px" :class="{ 'opacity-60 cursor-wait': loading }">
+	<div class="pb-24 min-h-250px" :class="{ 'opacity-60 cursor-wait': loading }">
 		<h1 class="text-2xl font-bold mb-8">Редактирование страницы</h1>
 		<page-form v-if="!loading" :formFields="formFields" actionType="edit"></page-form>
 	</div>
@@ -7,8 +7,8 @@
 
 <script>
 import { onBeforeMount, ref } from 'vue';
-import { apiGetPageById } from '@/api/apiGetPageById';
 import { useRouter } from 'vue-router';
+import { apiGetPageById } from '@/api/page/apiGetPageById';
 import PageForm from '@/components/pages/PageForm.vue';
 
 export default {
@@ -24,9 +24,9 @@ export default {
 
 		onBeforeMount(async () => {
 			try {
-				const res = await apiGetPageById(+pageId);
-				formFields.value = res;
-			} catch (e) {
+				const response = await apiGetPageById(+pageId);
+				formFields.value = response;
+			} catch (error) {
 				router.push({ name: 'admin-pages' });
 			} finally {
 				loading.value = false;

@@ -4,7 +4,7 @@
 			<div class="border-b border-gray-300 p-2 w-1/12 flex-none">id</div>
 			<div class="border-b border-gray-300 p-2 w-3/12">Заголовок</div>
 			<div class="border-b border-gray-300 p-2 w-3/12">Путь (path)</div>
-			<div class="border-b border-gray-300 p-2 w-2/12">Имя файла</div>
+			<div class="border-b border-gray-300 p-2 w-2/12">Редирект</div>
 			<div class="border-b border-gray-300 p-2 w-3/12 text-right">Действия</div>
 		</div>
 		<div
@@ -27,7 +27,7 @@
 				{{ page.path }}
 			</div>
 			<div class="relative z-20 py-1.5 px-3 w-2/12">
-				{{ page.template_filename }}
+				{{ page.redirect }}
 			</div>
 			<div class="relative z-20 py-1.5 pl-3 pr-1 w-3/12">
 				<div class="flex justify-end items-center space-x-3">
@@ -47,7 +47,7 @@
 					<div
 						class="flex-none border-2 border-rose-400 p-1 rounded-md cursor-pointer"
 						data-rd-tooltip="Удалить"
-						@click="deletePage(page.id)"
+						@click="deletePage(page)"
 					>
 						<i class="rd-icon text-rose-400 block text-18px">delete</i>
 					</div>
@@ -58,8 +58,6 @@
 </template>
 
 <script>
-import { apiDeletePage } from '@/api/apiDeletePage';
-
 export default {
 	name: 'admin-pages-list',
 	props: {
@@ -68,17 +66,11 @@ export default {
 			required: true,
 		},
 	},
-	emits: ['pageDeleted'],
+	emits: ['pageDelete'],
 	setup(props, context) {
-		const deletePage = async (id) => {
-			try {
-				const res = await apiDeletePage(+id);
-				if (res.statusCode === 200) {
-					context.emit('pageDeleted');
-				}
-			} catch (e) {}
+		const deletePage = (page) => {
+			context.emit('pageDelete', page);
 		};
-
 		return {
 			deletePage,
 		};
