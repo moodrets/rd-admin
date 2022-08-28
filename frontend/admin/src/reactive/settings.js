@@ -1,9 +1,5 @@
 import { reactive } from 'vue';
 
-export const ReactiveSettings = () => {
-	const settings = reactive({});
+const settings = reactive({});
 
-	return {
-		settings,
-	};
-};
+export { settings };

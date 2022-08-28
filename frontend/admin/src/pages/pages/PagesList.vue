@@ -7,11 +7,11 @@
 		</router-link>
 	</div>
 	<pages-list
-		v-if="pages.length"
+		v-if="pagesList.length"
 		@emitVisiblePage="onVisiblePage($event)"
 		@emitHiddenPage="onHiddenPage($event)"
 		@emitPageDelete="onDeletePage($event)"
-		:pages="pages"
+		:pages="pagesList"
 	></pages-list>
 	<div v-else class="font-bold text-18px">Нет созданных страниц</div>
 </template>
@@ -22,6 +22,7 @@ import { apiGetPageList } from '@/api/page/apiGetPageList';
 import { apiDeletePage } from '@/api/page/apiDeletePage';
 import { apiUpdatePage } from '@/api/page/apiUpdatePage';
 import PagesListComponent from '@/components/pages/List.vue';
+import { clearPageData } from '@/helpers/pageHelpers';
 
 export default {
 	name: 'pages-component',
@@ -29,40 +30,42 @@ export default {
 		'pages-list': PagesListComponent,
 	},
 	setup(props, context) {
-		const pages = ref([]);
-		const loadData = async () => {
-			pages.value = await apiGetPageList();
+		const pagesList = ref([]);
+		const loadPageList = async () => {
+			pagesList.value = await apiGetPageList();
 		};
 
-		loadData();
+		loadPageList();
 
 		const onDeletePage = async (page) => {
 			if (confirm(`Вы уверены что хотите удалить страницу - ${page.title}`)) {
 				try {
 					await apiDeletePage(page);
-					loadData();
+					loadPageList();
 				} catch (e) {}
 			}
 		};
 
 		const onVisiblePage = async (page) => {
-			page.hidden = false;
+			const payload = clearPageData(page);
+			payload.hidden = false;
 			try {
-				await apiUpdatePage(page);
-				loadData();
+				await apiUpdatePage(payload);
+				loadPageList();
 			} catch (e) {}
 		};
 
 		const onHiddenPage = async (page) => {
-			page.hidden = true;
+			const payload = clearPageData(page);
+			payload.hidden = true;
 			try {
-				await apiUpdatePage(page);
-				loadData();
+				await apiUpdatePage(payload);
+				loadPageList();
 			} catch (e) {}
 		};
 
 		return {
-			pages,
+			pagesList,
 			onHiddenPage,
 			onVisiblePage,
 			onDeletePage,

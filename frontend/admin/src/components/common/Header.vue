@@ -1,6 +1,11 @@
 <template>
 	<header class="py-3 bg-blue-700 mb-6">
 		<div class="centered flex items-center justify-between">
+			<div class="xl:hidden">
+				<div class="mr-3 flex-none cursor-pointer" @click="toggleOffcanvas">
+					<i class="rd-icon text-3xl">menu</i>
+				</div>
+			</div>
 			<router-link :to="{ name: 'admin-main' }" class="font-bold flex items-center">
 				<i class="rd-icon flex-none mr-2 text-3xl">change_history</i>
 				<span>RDAdmin</span>
@@ -15,7 +20,14 @@
 </template>
 
 <script>
+import { toggleOffcanvas } from '@/reactive/offcanvas';
+
 export default {
-	name: 'admin-header',
+	name: 'rd-header',
+	setup() {
+		return {
+			toggleOffcanvas,
+		};
+	},
 };
 </script>

@@ -1,7 +1,13 @@
 <template>
 	<div class="pb-24 min-h-250px" :class="{ 'opacity-60 cursor-wait': loading }">
 		<h1 class="text-2xl font-bold mb-8">Редактирование страницы</h1>
-		<page-form v-if="!loading" :formFields="formFields" actionType="edit"></page-form>
+		<page-form
+			v-if="!loading"
+			:formFields="formFields"
+			:loading="loading"
+			@emitSubmit="onFormSubmit($event)"
+			actionType="edit"
+		></page-form>
 	</div>
 </template>
 
@@ -10,6 +16,8 @@ import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { apiGetPageById } from '@/api/page/apiGetPageById';
 import PageForm from '@/components/pages/PageForm.vue';
+import { clearPageData } from '@/helpers/pageHelpers';
+import { apiUpdatePage } from '@/api/page/apiUpdatePage';
 
 export default {
 	name: 'edit-page-component',
@@ -33,9 +41,24 @@ export default {
 			}
 		});
 
+		const onFormSubmit = async (page) => {
+			loading.value = true;
+			const formData = clearPageData(page);
+			try {
+				if (confirm(`Вы уверены что хотить обновить страницу`)) {
+					await apiUpdatePage(formData);
+					router.push({ name: 'admin-pages' });
+				}
+			} catch (e) {
+			} finally {
+				loading.value = false;
+			}
+		};
+
 		return {
 			loading,
 			formFields,
+			onFormSubmit,
 		};
 	},
 };

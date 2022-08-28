@@ -36,7 +36,7 @@
 					</div>
 					<div
 						v-if="page.hidden"
-						class="flex-none text-blue-400 p-1 rounded-md cursor-pointer"
+						class="flex-none text-amber-400 p-1 rounded-md cursor-pointer"
 						data-rd-tooltip="Открыть"
 						@click="emitVisiblePage(page)"
 					>

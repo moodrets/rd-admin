@@ -11,6 +11,9 @@ module.exports = {
 			minHeight: {
 				'250px': '250px',
 			},
+			zIndex: {
+				100: 100,
+			},
 		},
 	},
 	plugins: [],

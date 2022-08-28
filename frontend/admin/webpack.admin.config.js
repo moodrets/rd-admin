@@ -9,10 +9,12 @@ const dotenvFile = dotenv.config({ path: '../.env' });
 const isDev = process.argv.includes('development');
 const isProd = process.argv.includes('production');
 const devServerPort = dotenvFile.parsed.ADMIN_DEV_SERVER_PORT || 1345;
+const devtool = isDev ? 'source-map' : false;
 
 module.exports = {
 	mode: isDev ? 'development' : 'production',
 	cache: false,
+	devtool,
 	context: path.resolve(__dirname),
 	entry: { admin: `./src/admin.js` },
 	output: {

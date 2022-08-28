@@ -9,9 +9,11 @@ const dotenvFile = dotenv.config({ path: '../.env' });
 const isDev = process.argv.includes('development');
 const isProd = process.argv.includes('production');
 const devServerPort = dotenvFile.parsed.APP_DEV_SERVER_PORT || 1344;
+const devtool = isDev ? 'source-map' : false;
 
 module.exports = {
 	mode: isDev ? 'development' : 'production',
+	devtool,
 	cache: false,
 	context: path.resolve(__dirname),
 	entry: { app: `./src/app.js` },

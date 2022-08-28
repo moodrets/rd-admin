@@ -1,7 +1,7 @@
 <template>
 	<form
 		@submit.prevent="formSubmit($event)"
-		:class="{ 'opacity-60 pointer-events-none': loading }"
+		:class="{ 'opacity-50 pointer-events-none': loading }"
 		class="grid grid-cols-1 gap-6 xl:grid-cols-2"
 	>
 		<label>
@@ -69,10 +69,6 @@
 
 <script>
 import { onMounted, ref } from 'vue';
-import { apiCreatePage } from '@/api/page/apiCreatePage';
-import { apiUpdatePage } from '@/api/page/apiUpdatePage';
-import { useRouter } from 'vue-router';
-import { CREATE_UPDATE_URL_REGEXP } from '@/regexp/urlRegexp';
 
 export default {
 	props: {
@@ -85,13 +81,16 @@ export default {
 			default: 'create',
 			required: true,
 		},
+		loading: {
+			type: Boolean,
+			default: false,
+			required: true,
+		},
 	},
-	setup({ formFields, actionType }, context) {
-		const router = useRouter();
-		const loading = ref(false);
+	setup({ formFields, actionType, loading }, context) {
 		const firstInputRef = ref(null);
 
-		if (actionType === 'edit' && formFields.json_data) {
+		if (actionType === 'edit' && formFields.json_data && typeof formFields.json_data === 'object') {
 			formFields.json_data = JSON.stringify(formFields.json_data);
 		}
 
@@ -107,40 +106,8 @@ export default {
 			formFields.path = urlParser(event.target.value);
 		};
 
-		const formSubmit = async (event) => {
-			const formData = {
-				...formFields,
-			};
-
-			formData.path !== '/' && (formData.path = formData.path.replace(CREATE_UPDATE_URL_REGEXP, ''));
-			!formData.redirect && delete formData.redirect;
-			!formData.template_filename && delete formData.template_filename;
-			!formData.json_data && delete formData.json_data;
-			!formData.styles && delete formData.styles;
-			!formData.scripts && delete formData.scripts;
-			delete formData.created_at;
-			delete formData.updated_at;
-
-			if (actionType === 'create') {
-				loading.value = true;
-				try {
-					await apiCreatePage(formData);
-					router.push({ name: 'admin-pages' });
-				} catch (e) {
-				} finally {
-					loading.value = false;
-				}
-			}
-
-			if (actionType === 'edit' && confirm(`Уверены что хотите обновить страницу - ${formData.title}`)) {
-				loading.value = true;
-				try {
-					await apiUpdatePage(formData);
-				} catch (e) {
-				} finally {
-					loading.value = false;
-				}
-			}
+		const formSubmit = (event) => {
+			context.emit('emitSubmit', formFields);
 		};
 
 		onMounted(() => {
