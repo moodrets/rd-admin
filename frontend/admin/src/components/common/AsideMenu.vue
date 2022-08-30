@@ -90,6 +90,10 @@ export default {
 
 		&-add {
 			@apply ml-auto text-white hover:border-blue-400 hover:text-blue-400;
+
+			&.is-active {
+				@apply text-blue-400;
+			}
 		}
 
 		&.is-active {
