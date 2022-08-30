@@ -16,7 +16,7 @@
 			/>
 		</label>
 		<label>
-			<div class="mb-3 text-gray-400 font-bold text-14px">Заголовок страницы - (H1)</div>
+			<div class="mb-3 text-gray-400 font-bold text-14px">Заголовок - (H1)</div>
 			<input type="text" v-model="formFields.title" class="rd-form-control" required />
 		</label>
 		<label>
@@ -28,18 +28,29 @@
 			<input type="text" v-model="formFields.template_filename" class="rd-form-control" />
 		</label>
 		<label class="xl:col-span-2">
+			<div class="mb-3 text-gray-400 font-bold text-14px">Текст</div>
+			<textarea v-model="formFields.content" rows="6" class="rd-form-control resize-y"></textarea>
+		</label>
+		<label class="xl:col-span-2">
 			<div class="mb-3 text-gray-400 font-bold text-14px">{{ 'Данные JSON {"some": "value"}' }}</div>
-			<textarea v-model="formFields.json_data" rows="6" class="rd-form-control resize-y"></textarea>
+			<codemirror
+				v-model="formFields.json_data"
+				:style="{ height: '200px' }"
+				:indent-with-tab="true"
+				:tab-size="2"
+				:extensions="codeMirrorExtension"
+			/>
+			<!-- <textarea v-model="formFields.json_data" rows="6" class="rd-form-control resize-y"></textarea> -->
 		</label>
 		<label>
-			<div class="mb-3 text-gray-400 font-bold text-14px">{{ 'Title страницы (<title></title>)' }}</div>
-			<input type="text" v-model="formFields.page_title" class="rd-form-control" />
+			<div class="mb-3 text-gray-400 font-bold text-14px">{{ 'Title (<title></title>)' }}</div>
+			<textarea v-model="formFields.page_title" rows="6" class="rd-form-control"></textarea>
 		</label>
 		<label>
 			<div class="mb-3 text-gray-400 font-bold text-14px">
-				{{ 'Description страницы (&#60;meta name="description" /&#62;)' }}
+				{{ 'Description (&#60;meta name="description" /&#62;)' }}
 			</div>
-			<input type="text" v-model="formFields.page_description" class="rd-form-control" />
+			<textarea v-model="formFields.page_description" rows="6" class="rd-form-control"></textarea>
 		</label>
 		<label>
 			<div class="mb-3 text-gray-400 font-bold text-14px">
@@ -56,7 +67,7 @@
 		<div class="select-none">
 			<label class="inline-flex items-center">
 				<input type="checkbox" v-model="formFields.hidden" class="flex-none mr-2 w-6 h-5" />
-				<div>Скрыть (Не будет и отображаться на сайте)</div>
+				<div>Скрыть (Не будет отображаться на сайте)</div>
 			</label>
 		</div>
 		<div class="fixed z-20 inset-x-0 bottom-0 py-4 flex justify-center shadow-md bg-gray-700">
@@ -69,8 +80,14 @@
 
 <script>
 import { onMounted, ref } from 'vue';
+import { Codemirror } from 'vue-codemirror';
+import { json } from '@codemirror/lang-json';
+import { oneDark } from '@codemirror/theme-one-dark';
 
 export default {
+	components: {
+		Codemirror,
+	},
 	props: {
 		formFields: {
 			type: Object,
@@ -87,8 +104,10 @@ export default {
 			required: true,
 		},
 	},
+	emits: ['emitSubmit'],
 	setup({ formFields, actionType, loading }, context) {
 		const firstInputRef = ref(null);
+		const codeMirrorExtension = [json(), oneDark];
 
 		if (actionType === 'edit' && formFields.json_data && typeof formFields.json_data === 'object') {
 			formFields.json_data = JSON.stringify(formFields.json_data);
@@ -119,6 +138,7 @@ export default {
 			formSubmit,
 			firstInputRef,
 			onPathInput,
+			codeMirrorExtension,
 		};
 	},
 };

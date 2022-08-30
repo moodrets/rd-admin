@@ -34,11 +34,8 @@ export default {
 
 <style lang="scss">
 .rd-offcanvas {
-	@apply fixed inset-0 z-100 bg-black bg-opacity-60;
-	opacity: 0;
+	@apply fixed inset-0 z-100 bg-black bg-opacity-60 opacity-0 pointer-events-none invisible;
 	transition: all 0.3s;
-	pointer-events: none;
-	visibility: hidden;
 
 	&__body {
 		@apply bg-gray-800 p-3 absolute overflow-y-auto left-0 top-0 bottom-0 shadow-md;
@@ -48,9 +45,7 @@ export default {
 	}
 
 	&.is-open {
-		opacity: 1;
-		pointer-events: auto;
-		visibility: visible;
+		@apply opacity-100 pointer-events-auto visible;
 
 		.rd-offcanvas__body {
 			transform: translate3d(0, 0, 0);

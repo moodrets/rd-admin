@@ -26,7 +26,7 @@ export default {
 				path: '/blocks',
 				iconName: 'widgets',
 				addPath: '/blocks/create',
-				title: 'Данные страниц',
+				title: 'Блоки (данные страниц)',
 			},
 			{
 				path: '/menus',

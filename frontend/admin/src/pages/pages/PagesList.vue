@@ -21,7 +21,7 @@ import { ref } from 'vue';
 import { apiGetPageList } from '@/api/page/apiGetPageList';
 import { apiDeletePage } from '@/api/page/apiDeletePage';
 import { apiUpdatePage } from '@/api/page/apiUpdatePage';
-import PagesListComponent from '@/components/pages/List.vue';
+import PagesListComponent from '@/components/page/List.vue';
 import { clearPageData } from '@/helpers/pageHelpers';
 
 export default {

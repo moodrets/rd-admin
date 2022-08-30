@@ -1,5 +1,6 @@
 export class Page {
 	title = '';
+	content = '';
 	path = '';
 	redirect = '';
 	page_title = '';

@@ -26,6 +26,9 @@ export class Page {
 	@Column()
 	title: string;
 
+	@Column({ type: 'longtext', nullable: true, default: null })
+	content: string;
+
 	@Column({ default: 'BasePage' })
 	template_filename: string;
 

@@ -13,8 +13,8 @@
 
 <script>
 import { reactive, ref } from 'vue';
-import PageForm from '@/components/pages/PageForm.vue';
-import { Page } from '@/models/pages/PageModel';
+import PageForm from '@/components/page/PageForm.vue';
+import { Page } from '@/models/page/PageModel';
 import { clearPageData } from '@/helpers/pageHelpers';
 import { apiCreatePage } from '@/api/page/apiCreatePage';
 import { useRouter } from 'vue-router';

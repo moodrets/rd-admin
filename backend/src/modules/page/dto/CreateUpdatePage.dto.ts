@@ -13,12 +13,16 @@ export class CreateUpdatePageDto {
 	@IsString()
 	path: string;
 
-	@IsString()
 	@IsOptional()
+	@IsString()
 	redirect: string;
 
 	@IsString()
 	title: string;
+
+	@IsOptional()
+	@IsString()
+	content: string;
 
 	@IsOptional()
 	@IsString()

@@ -1,0 +1,9 @@
+.v-codemirror {
+	.cm-editor {
+		@apply border-2 border-gray-600 rounded-lg overflow-hidden;
+
+		&.cm-focused {
+			@apply border-blue-400;
+		}
+	}
+}

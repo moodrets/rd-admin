@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
     db:
-        image: mysql:8.0
+        image: mysql:8.0.30-debian
         command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci
         container_name: ${DB_CONTAINER_NAME}
         environment:

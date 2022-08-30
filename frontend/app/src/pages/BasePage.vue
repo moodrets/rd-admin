@@ -2,6 +2,7 @@
 	<app-header></app-header>
 	<section class="centered">
 		<h1 class="text-3xl font-bold mb-8">{{ pageData.title }}</h1>
+		<main>{{ pageData.content || '' }}</main>
 	</section>
 	<app-footer></app-footer>
 </template>

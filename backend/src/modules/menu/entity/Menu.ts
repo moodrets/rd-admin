@@ -1,5 +1,13 @@
 import { Page } from 'src/modules/page/entity/Page';
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+	Column,
+	CreateDateColumn,
+	Entity,
+	JoinTable,
+	ManyToMany,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Menu {
@@ -12,8 +20,9 @@ export class Menu {
 	@UpdateDateColumn()
 	updated_at: Date;
 
-	@OneToMany((type) => Page, (page) => page.id)
-	page_ids: number[];
+	@ManyToMany(() => Page, (page) => page.id)
+	@JoinTable()
+	page: Page[];
 
 	@Column()
 	name: string;
@@ -24,3 +33,15 @@ export class Menu {
 	@Column({ type: 'boolean', default: false })
 	global: boolean;
 }
+
+/*
+menu    
+    id
+    parent_id
+    created_at
+    updated_at
+    page
+    name
+    data_json
+    global
+*/

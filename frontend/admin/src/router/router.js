@@ -19,7 +19,7 @@ const routes = [
 			{
 				path: '/menus/create',
 				name: 'admin-menu-create',
-				component: () => import('@/pages/common/DummyPage.vue'),
+				component: () => import('@/pages/menu/CreateMenu.vue'),
 			},
 			{
 				path: '/pages',
@@ -86,17 +86,18 @@ const routes = [
 				name: 'admin-settings',
 				component: () => import('@/pages/common/DummyPage.vue'),
 			},
-			// 404
-			{
-				path: '/:pathMatch(.*)*',
-				component: () => import('@/pages/common/NotFoundPage.vue'),
-			},
 		],
 	},
+	// login
 	{
 		path: '/login',
 		name: 'admin-login',
 		component: () => import('@/pages/common/LoginPage.vue'),
+	},
+	// 404
+	{
+		path: '/:pathMatch(.*)*',
+		component: () => import('@/pages/common/NotFoundPage.vue'),
 	},
 ];
 

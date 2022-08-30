@@ -14,7 +14,7 @@ export class PageService {
 	) {}
 
 	async getByPath(path: string): Promise<Page> {
-		return await this.pageRepository.findOne({
+		const page = await this.pageRepository.findOne({
 			select: {
 				title: true,
 				page_title: true,
@@ -25,12 +25,14 @@ export class PageService {
 				styles: true,
 				json_data: true,
 				redirect: true,
+				content: true,
 			},
 			where: {
 				path,
 				hidden: false,
 			},
 		});
+		return page;
 	}
 
 	async getPageById(id: number): Promise<Page> {
