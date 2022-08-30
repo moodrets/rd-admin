@@ -3,7 +3,7 @@
 	<div class="centered">
 		<div class="flex">
 			<div class="w-1/4 hidden xl:block">
-				<rd-aside-menu></rd-aside-menu>
+				<rd-aside-menu addClass="sticky z-40" style="top: 84px"></rd-aside-menu>
 			</div>
 			<div class="min-w-0 flex-1 xl:pl-8">
 				<router-view></router-view>

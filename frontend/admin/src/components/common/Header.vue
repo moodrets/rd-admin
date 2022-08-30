@@ -1,5 +1,5 @@
 <template>
-	<header class="py-3 bg-blue-700 mb-6">
+	<header class="py-3 bg-blue-700 mb-6 sticky top-0 z-40">
 		<div class="centered flex items-center justify-between">
 			<div class="xl:hidden">
 				<div class="mr-3 flex-none cursor-pointer" @click="toggleOffcanvas">

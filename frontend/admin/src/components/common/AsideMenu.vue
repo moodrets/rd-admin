@@ -1,5 +1,5 @@
 <template>
-	<div class="rd-aside-menu">
+	<div class="rd-aside-menu" :class="addClass">
 		<router-link v-for="link in links" :to="link.path" class="rd-aside-menu__item">
 			<i class="rd-aside-menu__item-mainicon rd-icon mr-2">{{ link.iconName }}</i>
 			<span class="text-white">{{ link.title }}</span>
@@ -13,6 +13,9 @@
 
 <script>
 export default {
+	props: {
+		addClass: '',
+	},
 	name: 'aside-menu',
 	setup() {
 		const links = [
