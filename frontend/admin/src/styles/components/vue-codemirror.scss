@@ -1,9 +1,25 @@
 .v-codemirror {
 	.cm-editor {
-		@apply border-2 border-gray-600 rounded-lg overflow-hidden;
+		@apply border-2 border-gray-600 rounded-lg overflow-hidden bg-gray-800;
 
 		&.cm-focused {
 			@apply border-blue-400;
+		}
+
+		.cm-activeLine {
+			@apply bg-opacity-50 bg-gray-800;
+		}
+
+		.cm-gutters {
+			@apply bg-gray-800;
+		}
+
+		.cm-activeLineGutter {
+			@apply bg-gray-800;
+		}
+
+		.cm-matchingBracket {
+			@apply bg-gray-700;
 		}
 	}
 }

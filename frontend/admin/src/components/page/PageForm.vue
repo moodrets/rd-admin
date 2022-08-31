@@ -38,9 +38,8 @@
 				:style="{ height: '200px' }"
 				:indent-with-tab="true"
 				:tab-size="2"
-				:extensions="codeMirrorExtension"
+				:extensions="codeJSON"
 			/>
-			<!-- <textarea v-model="formFields.json_data" rows="6" class="rd-form-control resize-y"></textarea> -->
 		</label>
 		<label>
 			<div class="mb-3 text-gray-400 font-bold text-14px">{{ 'Title (<title></title>)' }}</div>
@@ -56,13 +55,25 @@
 			<div class="mb-3 text-gray-400 font-bold text-14px">
 				{{ 'Скрипты &#60;script&#62;...&#60;/script&#62;' }}
 			</div>
-			<textarea v-model="formFields.scripts" rows="6" class="rd-form-control resize-y"></textarea>
+			<codemirror
+				v-model="formFields.scripts"
+				:style="{ height: '200px' }"
+				:indent-with-tab="true"
+				:tab-size="2"
+				:extensions="codeHTML"
+			/>
 		</label>
 		<label>
 			<div class="mb-3 text-gray-400 font-bold text-14px">
 				{{ 'Стили &#60;style&#62;...&#60;style&#62; или &#60;link href="..." /&#62;' }}
 			</div>
-			<textarea v-model="formFields.styles" rows="6" class="rd-form-control resize-y"></textarea>
+			<codemirror
+				v-model="formFields.styles"
+				:style="{ height: '200px' }"
+				:indent-with-tab="true"
+				:tab-size="2"
+				:extensions="codeHTML"
+			/>
 		</label>
 		<div class="select-none">
 			<label class="inline-flex items-center">
@@ -70,7 +81,7 @@
 				<div>Скрыть (Не будет отображаться на сайте)</div>
 			</label>
 		</div>
-		<div class="fixed z-20 inset-x-0 bottom-0 py-4 flex justify-center shadow-md bg-gray-700">
+		<div class="fixed z-50 inset-x-0 bottom-0 py-4 flex justify-center shadow-md bg-gray-700">
 			<button type="submit" class="rd-button rd-button--success" :class="{ 'rd-button--loading': loading }">
 				<span>{{ actionType === 'edit' ? 'Редактировать' : 'Создать' }}</span>
 			</button>
@@ -82,6 +93,7 @@
 import { onMounted, ref } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 import { json } from '@codemirror/lang-json';
+import { html } from '@codemirror/lang-html';
 import { oneDark } from '@codemirror/theme-one-dark';
 
 export default {
@@ -107,7 +119,8 @@ export default {
 	emits: ['emitSubmit'],
 	setup({ formFields, actionType, loading }, context) {
 		const firstInputRef = ref(null);
-		const codeMirrorExtension = [json(), oneDark];
+		const codeJSON = [json(), oneDark];
+		const codeHTML = [html(), oneDark];
 
 		if (actionType === 'edit' && formFields.json_data && typeof formFields.json_data === 'object') {
 			formFields.json_data = JSON.stringify(formFields.json_data);
@@ -135,10 +148,11 @@ export default {
 
 		return {
 			loading,
-			formSubmit,
 			firstInputRef,
 			onPathInput,
-			codeMirrorExtension,
+			formSubmit,
+			codeJSON,
+			codeHTML,
 		};
 	},
 };
