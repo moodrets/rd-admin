@@ -10,6 +10,11 @@ export const clearPageData = (data) => {
 	!page.styles && delete page.styles;
 	!page.scripts && delete page.scripts;
 	!page.json_data && delete page.json_data;
+	!page.page_title && delete page.page_title;
+	!page.page_description && delete page.page_description;
+	!page.content && delete page.content;
+	page.hidden === false && delete page.hidden;
+
 	if (typeof page.json_data === 'object') {
 		page.json_data = JSON.stringify(page.json_data);
 	}
