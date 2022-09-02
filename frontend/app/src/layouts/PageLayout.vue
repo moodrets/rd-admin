@@ -1,5 +1,5 @@
 <template>
-	<component :is="loadTemplate" :pageData="pageData"></component>
+	<component :is="loadTemplate" :data="data"></component>
 </template>
 
 <script>
@@ -10,11 +10,11 @@ export default {
 	name: 'simple-page',
 	setup() {
 		const loadTemplate = shallowRef(null);
-		const pageData = ref({});
+		const data = ref({});
 
 		const setPageData = () => {
-			pageData.value = useRoute().meta;
-			loadTemplate.value = defineAsyncComponent(() => import(`@/pages/${pageData.value.template_filename}.vue`));
+			data.value = useRoute().meta;
+			loadTemplate.value = defineAsyncComponent(() => import(`@/pages/${data.value.page.template_filename}.vue`));
 		};
 		setPageData();
 
@@ -24,7 +24,7 @@ export default {
 
 		return {
 			loadTemplate,
-			pageData,
+			data,
 		};
 	},
 };

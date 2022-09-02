@@ -12,24 +12,26 @@ const router = createRouter({
 	],
 });
 
-const notFoundPageData = {
-	title: '404 - Страница не найдена',
-	page_title: '404 - Страница не найдена',
-	page_description: '404 - Страница не найдена',
-	template_filename: 'BasePage',
+const notFoundData = {
+	page: {
+		title: '404 - Страница не найдена',
+		page_title: '404 - Страница не найдена',
+		page_description: '404 - Страница не найдена',
+		template_filename: 'BasePage',
+	},
 };
 
 router.beforeEach(async (to, from, next) => {
 	// 404
 	if (to.path === '/404') {
-		to.meta = { ...notFoundPageData };
-		setPageTitle(to.meta);
-		setPageDescription(to.meta);
+		to.meta.page = notFoundData.page;
+		setPageTitle(to.meta.page);
+		setPageDescription(to.meta.page);
 		next();
 		return;
 	}
 
-	const page = await apiGetPageByUrl(to.path);
+	const { page, blocks, menus } = await apiGetPageByUrl(to.path);
 
 	// redirect local
 	if (page && page.redirect && checkLocalDomain(page.redirect)) {
@@ -44,9 +46,11 @@ router.beforeEach(async (to, from, next) => {
 	}
 
 	if (page) {
-		to.meta = { ...page };
-		setPageTitle(to.meta);
-		setPageDescription(to.meta);
+		to.meta.page = page;
+		to.meta.blocks = blocks;
+		to.meta.menus = menus;
+		setPageTitle(to.meta.page);
+		setPageDescription(to.meta.page);
 		next();
 		return;
 	}

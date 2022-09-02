@@ -1,11 +1,19 @@
 const { Router } = require('express');
-const { query } = require('../../db/query');
-
 const PageRouter = Router();
+const { query } = require('../../db/query');
+const { makePageData, makeCreatePageSQLQuery, makeUpdatePageSQLQuery } = require('./helpers/pageHelpers');
+const { JSON_INVALID, SERVER_ERROR } = require('../../common/messages');
+const {
+	PAGE_CREATED,
+	PAGE_DELETED,
+	PAGE_URL_EXIST,
+	PAGE_NOT_FOUND,
+	PAGE_UPDATED,
+} = require('./messages/page-messages');
 
 PageRouter.get('/page/byPath', async (req, res, next) => {
 	const path = req.query.path;
-	const pages = await query(`
+	const [db_page] = await query(`
         SELECT 
             id,
             page_title,
@@ -22,96 +30,135 @@ PageRouter.get('/page/byPath', async (req, res, next) => {
         AND hidden=0;
     `);
 
-	if (pages[0]) {
-		return res.status(200).json({ ...pages[0] });
+	const menus = {};
+	const blocks = {};
+	let page = {};
+
+	if (db_page) {
+		page = { ...db_page };
+		let db_local_menus = [];
+		const db_global_menus = await query(`SELECT id, json_data, title, name, global from menu WHERE global=true`);
+		const [db_menu_page] = await query(`SELECT menu_id from menu_page WHERE page_id=${page.id}`);
+		if (db_menu_page) {
+			const menu_id = db_menu_page.menu_id;
+			db_local_menus = await query(`SELECT id, json_data, title, name, global from menu WHERE id=${menu_id}`);
+		}
+		// db_local_menuss = await query(
+		// 	`SELECT * from menu m INNER JOIN menu_page mp ON m.id=mp.menu_id INNER JOIN page p ON p.id=mp.page_id`
+		// );
+		const mergeMenus = [...db_global_menus, ...db_local_menus];
+		for (let menu of mergeMenus) {
+			const db_menu_items = await query(
+				`SELECT id, icon, json_data, menu_id, parent_id, title, url from menu_item WHERE menu_id=${menu.id} AND hidden=false`
+			);
+			if (db_menu_items.length) {
+				menu['items'] = db_menu_items;
+				menus[menu.name] = menu;
+			}
+		}
+
+		return res.status(200).json({
+			page,
+			menus,
+			blocks,
+		});
 	}
 
 	return res.status(200).json({
-		page: null,
+		page,
+		menus,
+		blocks,
 	});
 });
 
 PageRouter.get('/page/get/:id', async (req, res, next) => {
 	const pageId = req.params.id;
-	const pages = await query(`SELECT * FROM page WHERE id=${pageId}`);
+	const [db_page] = await query(`SELECT * FROM page WHERE id=${pageId}`);
 
-	if (pages[0]) {
-		return res.status(200).json({ ...pages[0] });
+	if (db_page) {
+		return res.status(200).json({ ...db_page });
 	}
 
 	return res.status(404).json({
-		message: 'Страница не найдена',
+		message: PAGE_NOT_FOUND,
 	});
 });
 
 PageRouter.get('/page/list', async (req, res, next) => {
-	const pages = await query('SELECT * from page;');
-
-	if (pages[0]) {
-		return res.status(200).json(pages);
-	}
-
-	return res.status(200).json([]);
+	const db_page_list = await query('SELECT * from page;');
+	return res.status(200).json(db_page_list);
 });
 
 PageRouter.post('/page/create', async (req, res, next) => {
 	const frontPage = req.body;
-	const existPage = await query(`SELECT * from page WHERE path='${frontPage.path}'`);
+	const [db_exist_page] = await query(`SELECT * from page WHERE path='${frontPage.path}'`);
 
-	if (existPage[0]) {
+	if (db_exist_page) {
 		return res.status(409).json({
-			message: 'Страница с таким url уже существует',
+			message: PAGE_URL_EXIST,
 		});
 	}
 
-	frontPage.json_data && (frontPage.json_data = JSON.stringify(frontPage.json_data));
+	const page = makePageData(frontPage);
+	const queryString = makeCreatePageSQLQuery(page);
 
-	const columns = [];
-	const values = [];
-
-	for (const key in frontPage) {
-		columns.push(key);
-		switch (key) {
-			case 'json_data':
-				values.push(frontPage[key]);
-				break;
-			case 'hidden':
-				values.push(+frontPage[key]);
-				break;
-			default:
-				values.push(`'${frontPage[key]}'`);
+	try {
+		const { affectedRows } = await query(queryString);
+		if (affectedRows) {
+			return res.status(200).json({
+				message: PAGE_CREATED,
+			});
+		}
+	} catch (error) {
+		if (error.message.includes('Invalid JSON text:')) {
+			return res.status(500).json({
+				message: JSON_INVALID,
+			});
 		}
 	}
 
-	const queryString = `INSERT INTO page (${[...columns]}) VALUES (${[...values]})`;
-
-	const dbRequest = await query(queryString);
-
-	if (dbRequest.affectedRows) {
-		return res.status(200).json({
-			message: 'Страница успешно создана',
-		});
-	}
-
 	return res.status(500).json({
-		message: 'Ошибка сервера',
+		message: SERVER_ERROR,
 	});
 });
 
-PageRouter.put('/page/update/:id', async (req, res, next) => {});
+PageRouter.put('/page/update/:id', async (req, res, next) => {
+	const frontPage = req.body;
+	const page = makePageData(frontPage);
+	const queryString = makeUpdatePageSQLQuery(page);
+
+	try {
+		const { affectedRows } = await query(queryString);
+		if (affectedRows) {
+			return res.status(200).json({
+				message: PAGE_UPDATED,
+			});
+		}
+	} catch (error) {
+		if (error.message.includes('Invalid JSON text:')) {
+			return res.status(500).json({
+				message: JSON_INVALID,
+			});
+		}
+	}
+
+	return res.status(500).json({
+		message: SERVER_ERROR,
+	});
+});
 
 PageRouter.delete('/page/delete/:id', async (req, res, next) => {
 	const pageId = req.params.id;
-	const dbRequest = await query(`DELETE FROM page WHERE id=${pageId}`);
+	const { affectedRows } = await query(`DELETE FROM page WHERE id=${pageId}`);
 
-	if (dbRequest.affectedRows) {
+	if (affectedRows) {
 		return res.status(200).json({
-			message: 'Страницы с таким id не существует',
+			message: PAGE_DELETED,
 		});
 	}
 
 	return res.status(500).json({
-		message: 'Ошибка сервера',
+		message: SERVER_ERROR,
 	});
 });
 

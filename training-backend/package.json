@@ -2,7 +2,7 @@
 	"name": "rd-admin-express",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "backend.js",
 	"scripts": {
 		"back:serve": "nodemon backend.js"
 	},

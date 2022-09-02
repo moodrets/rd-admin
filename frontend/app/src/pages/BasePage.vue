@@ -1,8 +1,10 @@
 <template>
 	<app-header></app-header>
 	<section class="centered">
-		<h1 class="text-3xl font-bold mb-8">{{ pageData.title }}</h1>
-		<main>{{ pageData.content || '' }}</main>
+		<h1 class="text-3xl font-bold mb-8">{{ data.page.title }}</h1>
+		<main>
+			<div v-html="data.page.content"></div>
+		</main>
 	</section>
 	<app-footer></app-footer>
 </template>
@@ -17,7 +19,7 @@ export default {
 		'app-footer': Footer,
 	},
 	props: {
-		pageData: {
+		data: {
 			type: Object,
 			required: true,
 		},
