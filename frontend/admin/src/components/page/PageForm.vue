@@ -42,7 +42,14 @@
 			<textarea v-model="formFields.page_description" rows="6" class="rd-form-control"></textarea>
 		</label>
 		<label class="xl:col-span-2">
-			<div class="mb-3 text-gray-400 font-bold text-14px">{{ 'Данные JSON {"some": "value"}' }}</div>
+			<div class="mb-3 text-gray-400 font-bold text-14px flex items-center">
+				<span class="text-rose-400">{{ 'Данные JSON {"some": "value"}' }}</span>
+				<span
+					class="cursor-pointer text-md flex-none w-6 h-6 rounded-full border-2 border-rose-400 text-rose-400 flex items-center justify-center ml-2"
+				>
+					?
+				</span>
+			</div>
 			<codemirror
 				v-model="formFields.json_data"
 				:style="{ height: '200px' }"
