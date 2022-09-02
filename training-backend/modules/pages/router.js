@@ -41,7 +41,9 @@ PageRouter.get('/page/byPath', async (req, res, next) => {
 		const [db_menu_page] = await query(`SELECT menu_id from menu_page WHERE page_id=${page.id}`);
 		if (db_menu_page) {
 			const menu_id = db_menu_page.menu_id;
-			db_local_menus = await query(`SELECT id, json_data, title, name, global from menu WHERE id=${menu_id}`);
+			db_local_menus = await query(
+				`SELECT id, json_data, title, name, global from menu WHERE id=${menu_id} AND hidden=false`
+			);
 		}
 		// db_local_menuss = await query(
 		// 	`SELECT * from menu m INNER JOIN menu_page mp ON m.id=mp.menu_id INNER JOIN page p ON p.id=mp.page_id`

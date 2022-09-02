@@ -1,7 +1,8 @@
 import { createWebHistory, createRouter } from 'vue-router';
-import { setPageDescription, setPageTitle } from '@/router/pageSeo';
-import { checkLocalDomain } from '@/router/urlHelpers';
+import { setPageDescription, setPageTitle } from '@/helpers/pageSeo';
+import { checkLocalDomain } from '@/helpers/urlHelpers';
 import { apiGetPageByUrl } from '@/api/apiGetPageByUrl';
+import { emptyObject } from '@/helpers/dataHelpers';
 import PageLayout from '@/layouts/PageLayout.vue';
 
 const router = createRouter({
@@ -34,18 +35,19 @@ router.beforeEach(async (to, from, next) => {
 	const { page, blocks, menus } = await apiGetPageByUrl(to.path);
 
 	// redirect local
-	if (page && page.redirect && checkLocalDomain(page.redirect)) {
+	if (!emptyObject(page) && page.redirect && checkLocalDomain(page.redirect)) {
 		next(page.redirect);
 		return;
 	}
 
 	// redirect other domain
-	if (page && page.redirect && !checkLocalDomain(page.redirect)) {
+	if (!emptyObject(page) && page.redirect && !checkLocalDomain(page.redirect)) {
 		window.location.href = page.redirect;
 		return;
 	}
 
-	if (page) {
+	if (!emptyObject(page)) {
+		console.log('go');
 		to.meta.page = page;
 		to.meta.blocks = blocks;
 		to.meta.menus = menus;
@@ -55,7 +57,7 @@ router.beforeEach(async (to, from, next) => {
 		return;
 	}
 
-	if (!page) {
+	if (emptyObject(page)) {
 		next({ name: 'not-found-page' });
 	}
 });

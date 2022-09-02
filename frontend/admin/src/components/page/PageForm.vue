@@ -31,16 +31,6 @@
 			<div class="mb-3 text-gray-400 font-bold text-14px">Текст</div>
 			<textarea v-model="formFields.content" rows="6" class="rd-form-control resize-y"></textarea>
 		</label>
-		<label class="xl:col-span-2">
-			<div class="mb-3 text-gray-400 font-bold text-14px">{{ 'Данные JSON {"some": "value"}' }}</div>
-			<codemirror
-				v-model="formFields.json_data"
-				:style="{ height: '200px' }"
-				:indent-with-tab="true"
-				:tab-size="2"
-				:extensions="codeJSON"
-			/>
-		</label>
 		<label>
 			<div class="mb-3 text-gray-400 font-bold text-14px">{{ 'Title (<title></title>)' }}</div>
 			<textarea v-model="formFields.page_title" rows="6" class="rd-form-control"></textarea>
@@ -50,6 +40,16 @@
 				{{ 'Description (&#60;meta name="description" /&#62;)' }}
 			</div>
 			<textarea v-model="formFields.page_description" rows="6" class="rd-form-control"></textarea>
+		</label>
+		<label class="xl:col-span-2">
+			<div class="mb-3 text-gray-400 font-bold text-14px">{{ 'Данные JSON {"some": "value"}' }}</div>
+			<codemirror
+				v-model="formFields.json_data"
+				:style="{ height: '200px' }"
+				:indent-with-tab="true"
+				:tab-size="2"
+				:extensions="codeJSON"
+			/>
 		</label>
 		<label>
 			<div class="mb-3 text-gray-400 font-bold text-14px">

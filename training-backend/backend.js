@@ -1,10 +1,10 @@
 // packages
 const express = require('express');
 const cors = require('cors');
-const env = require('dotenv').config({ path: '../.env' });
+const { parsed } = require('dotenv').config({ path: '../.env' });
 
 // base
-const PORT = env.parsed.BACKEND_DEV_SERVER_PORT || 1346;
+const PORT = parsed.BACKEND_DEV_SERVER_PORT || 1346;
 const { query } = require('./db/query');
 const { pageTable, menuTable, menuItem, menuPageTable } = require('./db/migrations');
 
