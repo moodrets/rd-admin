@@ -107,7 +107,7 @@ PageRouter.post('/page/create', async (req, res, next) => {
 	try {
 		const { affectedRows } = await query(queryString);
 		if (affectedRows) {
-			return res.status(200).json({
+			return res.status(201).json({
 				message: PAGE_CREATED,
 			});
 		}
@@ -132,7 +132,7 @@ PageRouter.put('/page/update/:id', async (req, res, next) => {
 	try {
 		const { affectedRows } = await query(queryString);
 		if (affectedRows) {
-			return res.status(200).json({
+			return res.status(201).json({
 				message: PAGE_UPDATED,
 			});
 		}

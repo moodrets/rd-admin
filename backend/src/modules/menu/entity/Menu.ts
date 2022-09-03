@@ -20,9 +20,9 @@ export class Menu {
 	@UpdateDateColumn()
 	updated_at: Date;
 
-	@ManyToMany(() => Page, (page) => page.id)
+	@ManyToMany(() => Page)
 	@JoinTable()
-	page: Page[];
+	and: Page[];
 
 	@Column()
 	name: string;
@@ -32,6 +32,9 @@ export class Menu {
 
 	@Column({ type: 'boolean', default: false })
 	global: boolean;
+
+	@Column({ type: 'boolean', default: false })
+	hidden: boolean;
 }
 
 /*

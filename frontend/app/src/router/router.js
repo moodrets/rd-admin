@@ -47,7 +47,6 @@ router.beforeEach(async (to, from, next) => {
 	}
 
 	if (!emptyObject(page)) {
-		console.log('go');
 		to.meta.page = page;
 		to.meta.blocks = blocks;
 		to.meta.menus = menus;

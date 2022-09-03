@@ -30,13 +30,13 @@ export class PageController {
 		return await this.pageService.delete(id);
 	}
 
-	@HttpCode(200)
+	@HttpCode(201)
 	@Put('update/:id')
 	async update(@Body() dto: CreateUpdatePageDto) {
 		return await this.pageService.update(dto);
 	}
 
-	@HttpCode(200)
+	@HttpCode(201)
 	@Post('create')
 	async createPage(@Body() dto: CreateUpdatePageDto) {
 		return await this.pageService.create(dto);
