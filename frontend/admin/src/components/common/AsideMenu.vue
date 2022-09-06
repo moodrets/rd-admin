@@ -2,7 +2,7 @@
 	<div class="rd-aside-menu" :class="addClass">
 		<router-link v-for="link in links" :to="link.path" class="rd-aside-menu__item">
 			<i class="rd-aside-menu__item-mainicon rd-icon mr-2">{{ link.iconName }}</i>
-			<span class="text-white">{{ link.title }}</span>
+			<span>{{ link.title }}</span>
 			<router-link v-if="link.addPath" :to="link.addPath" class="rd-aside-menu__item-add">
 				<i class="rd-icon">{{ link.addIcon ? link.addIcon : 'library_add' }}</i>
 			</router-link>
@@ -86,18 +86,22 @@ export default {
 	@apply font-semibold flex flex-col space-y-5;
 
 	&__item {
-		@apply flex items-center justify-between text-blue-400 hover:text-white;
+		@apply flex items-center justify-between text-white hover:text-blue-400;
+
+		&-mainicon {
+			@apply text-blue-400;
+		}
+
+		&.is-active {
+			@apply text-blue-400;
+		}
 
 		&-add {
-			@apply ml-auto text-white hover:border-blue-400 hover:text-blue-400;
+			@apply ml-auto text-white hover:text-blue-400;
 
 			&.is-active {
 				@apply text-blue-400;
 			}
-		}
-
-		&.is-active {
-			@apply text-white;
 		}
 	}
 }

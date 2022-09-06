@@ -5,6 +5,7 @@ import { Column, CreateDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, Upd
 export class MenuItem {
 	@PrimaryGeneratedColumn()
 	id: number;
+
 	@CreateDateColumn()
 	created_at: Date;
 
@@ -14,7 +15,7 @@ export class MenuItem {
 	@OneToOne((type) => Menu, (menu) => menu.id)
 	menu_id: number;
 
-	@Column()
+	@Column({ nullable: true, default: null })
 	parent_id: number;
 
 	@Column()
@@ -28,4 +29,7 @@ export class MenuItem {
 
 	@Column({ type: 'json', nullable: true, default: null })
 	data_json: string;
+
+	@Column({ type: 'boolean', default: false })
+	hidden: boolean;
 }

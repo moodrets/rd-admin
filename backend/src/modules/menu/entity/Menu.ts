@@ -20,11 +20,14 @@ export class Menu {
 	@UpdateDateColumn()
 	updated_at: Date;
 
-	@ManyToMany(() => Page)
+	@ManyToMany(() => Page, (page) => page.id)
 	@JoinTable()
-	and: Page[];
+	pages: number[];
 
 	@Column()
+	title: string;
+
+	@Column({ unique: true })
 	name: string;
 
 	@Column({ type: 'json', nullable: true, default: null })
@@ -36,15 +39,3 @@ export class Menu {
 	@Column({ type: 'boolean', default: false })
 	hidden: boolean;
 }
-
-/*
-menu    
-    id
-    parent_id
-    created_at
-    updated_at
-    page
-    name
-    data_json
-    global
-*/
