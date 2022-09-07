@@ -29,8 +29,8 @@ export class Page {
 	@Column({ type: 'longtext', nullable: true, default: null })
 	content: string;
 
-	@Column({ default: 'BasePage' })
-	template_filename: string;
+	@Column({ default: 'default' })
+	layout_filename: string;
 
 	@Column({ type: 'longtext', nullable: true, default: null })
 	scripts: string;

@@ -1,5 +1,5 @@
 module.exports = {
-	content: ['./admin/index.html', './admin/**/*.{html,js,vue,css,scss}'],
+	content: ['./index.html', './src/**/*.{html,js,vue,css,scss}'],
 	theme: {
 		extend: {
 			fontSize: {

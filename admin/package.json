@@ -1,18 +1,13 @@
 {
-	"name": "rd-cms-frontend",
+	"name": "rd-cms-admin",
+	"author": "retsdmitriy@gmail.com",
 	"version": "1.0.0",
-	"description": "",
+	"main": "webpack.config.js",
 	"scripts": {
-		"admin:serve": "webpack serve --mode development --config ./admin/webpack.admin.config.js",
-		"admin:watch": "webpack --mode development --watch --config ./admin/webpack.admin.config.js",
-		"admin:build": "webpack --mode production --config ./admin/webpack.admin.config.js",
-		"app:serve": "webpack serve --mode development --config ./app/webpack.app.config.js",
-		"app:watch": "webpack --mode development --watch --config ./app/webpack.app.config.js",
-		"app:build": "webpack --mode production --config ./app/webpack.app.config.js"
+		"admin:serve": "webpack serve --mode development",
+		"admin:watch": "webpack --mode development --watch",
+		"admin:build": "webpack --mode production"
 	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
 	"devDependencies": {
 		"@babel/core": "^7.18.10",
 		"@babel/preset-env": "^7.18.10",

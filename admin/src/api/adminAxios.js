@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { RDToast } from '../../../shared/plugins/rd-toast/RDToast';
+import { RDToast } from '../plugins/rd-toast/RDToast';
 const toast = new RDToast();
 
 export const adminAxios = axios.create({

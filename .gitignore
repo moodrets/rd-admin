@@ -1,8 +1,16 @@
+# common
 .vscode
+
+# app
+app/node_modules
+
+# admin
+admin/node_modules
+admin/dist
+
+# backend
 backend/node_modules
-training-backend/node_modules
 backend/dist
 
-frontend/node_modules
-frontend/app/dist
-frontend/admin/dist
+# training backend
+training-backend/node_modules

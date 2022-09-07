@@ -25,7 +25,7 @@ export class PageService {
 				page_title: true,
 				page_description: true,
 				path: true,
-				template_filename: true,
+				layout_filename: true,
 				scripts: true,
 				styles: true,
 				json_data: true,
