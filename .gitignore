@@ -1,5 +1,6 @@
 # common
 .vscode
+.idea
 
 # app
 app/node_modules
