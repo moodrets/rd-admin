@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { MenuService } from 'src/modules/menu/menu.service';
 import { CreateUpdatePageDto } from 'src/modules/page/dto/CreateUpdatePage.dto';
 import { Page } from 'src/modules/page/entity/Page';
 import {
@@ -15,7 +16,8 @@ import { Repository } from 'typeorm';
 export class PageService {
 	constructor(
 		@InjectRepository(Page)
-		private pageRepository: Repository<Page>
+		private pageRepository: Repository<Page>,
+		private menuService: MenuService
 	) {}
 
 	async getByPath(path: string): Promise<any> {
@@ -28,7 +30,6 @@ export class PageService {
 				layout_filename: true,
 				scripts: true,
 				styles: true,
-				json_data: true,
 				redirect: true,
 				content: true,
 			},
@@ -37,7 +38,17 @@ export class PageService {
 				hidden: false,
 			},
 		});
-		return { page };
+
+		const globalMenus = await this.menuService.getGlobalMenus();
+
+		const menus = {
+			...globalMenus,
+		};
+
+		return {
+			page,
+			menus,
+		};
 	}
 
 	async getPageById(id: number): Promise<Page> {
@@ -55,9 +66,9 @@ export class PageService {
 	}
 
 	async create(dto: CreateUpdatePageDto) {
-		const response = await this.getByPath(dto.path);
+		const existPage = await this.getByPath(dto.path);
 
-		if (response.page) {
+		if (existPage.page) {
 			throw new HttpException(PAGE_URL_EXIST, HttpStatus.CONFLICT);
 		}
 		const createdPage = await this.pageRepository.save(dto);

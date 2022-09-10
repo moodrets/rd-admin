@@ -26,18 +26,17 @@ export default {
 				title: 'Страницы',
 			},
 			{
-				path: '/blocks',
-				iconName: 'widgets',
-				addPath: '/blocks/create',
-				title: 'Блоки (данные страниц)',
-			},
-			{
 				path: '/menus',
 				iconName: 'view_headline',
 				addPath: '/menus/create',
 				title: 'Меню',
 			},
-
+			{
+				path: '/blocks',
+				iconName: 'widgets',
+				addPath: '/blocks/create',
+				title: 'Блоки (данные страниц)',
+			},
 			{
 				path: '/users',
 				iconName: 'account_box',

@@ -1,5 +1,4 @@
 import { IsBoolean, IsJSON, IsOptional, IsString } from 'class-validator';
-import { INVALID_JSON_DATA } from 'src/common/messages/validator-messages';
 
 export class CreateUpdatePageDto {
 	@IsOptional()
@@ -35,10 +34,6 @@ export class CreateUpdatePageDto {
 	@IsOptional()
 	@IsString()
 	styles: string;
-
-	@IsOptional()
-	@IsJSON({ message: INVALID_JSON_DATA })
-	json_data: string;
 
 	@IsOptional()
 	@IsBoolean()

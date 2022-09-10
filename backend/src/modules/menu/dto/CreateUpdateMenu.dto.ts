@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsJSON, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsBoolean, IsJSON, IsOptional, IsString } from 'class-validator';
 import { CreateUpdatePageDto } from 'src/modules/page/dto/CreateUpdatePage.dto';
 
 export class CreateUpdateMenuDto {
@@ -13,14 +13,10 @@ export class CreateUpdateMenuDto {
 	name: string;
 
 	@IsOptional()
-	@IsJSON()
-	data_json: string;
-
-	@IsOptional()
-	@IsJSON()
+	@IsBoolean()
 	global: boolean;
 
 	@IsOptional()
-	@IsJSON()
+	@IsBoolean()
 	hidden: boolean;
 }

@@ -15,9 +15,9 @@
 import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { apiGetPageById } from '@/api/page/apiGetPageById';
-import PageForm from '@/components/page/PageForm.vue';
 import { clearPageData } from '@/helpers/pageHelpers';
 import { apiUpdatePage } from '@/api/page/apiUpdatePage';
+import PageForm from '@/components/page/PageForm.vue';
 
 export default {
 	name: 'edit-page-component',

@@ -27,9 +27,6 @@ export class MenuItem {
 	@Column()
 	icon: string;
 
-	@Column({ type: 'json', nullable: true, default: null })
-	data_json: string;
-
 	@Column({ type: 'boolean', default: false })
 	hidden: boolean;
 }

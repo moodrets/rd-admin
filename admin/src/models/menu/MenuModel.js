@@ -1,8 +1,7 @@
-import { Page } from '../page/PageModel';
-
 export class Menu {
-	page = new Page();
+	pages = [];
 	name = '';
-	data_json = '';
+	title = '';
 	global = false;
+	hidden = false;
 }

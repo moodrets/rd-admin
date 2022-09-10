@@ -30,9 +30,6 @@ export class Menu {
 	@Column({ unique: true })
 	name: string;
 
-	@Column({ type: 'json', nullable: true, default: null })
-	data_json: string;
-
 	@Column({ type: 'boolean', default: false })
 	global: boolean;
 

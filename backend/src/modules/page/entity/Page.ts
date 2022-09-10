@@ -38,9 +38,6 @@ export class Page {
 	@Column({ type: 'longtext', nullable: true, default: null })
 	styles: string;
 
-	@Column({ type: 'json', nullable: true, default: null })
-	json_data: string;
-
 	@Column({ type: 'boolean', default: false })
 	hidden: boolean;
 }

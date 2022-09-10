@@ -2,7 +2,7 @@
 	<header class="app-header">
 		<div class="centered flex items-center justify-between">
 			<div>
-				<nuxt-link class="text-lg font-bold" to="/">RD App</nuxt-link>
+				<router-link class="text-lg font-bold" to="/">RD App</router-link>
 			</div>
 			<div class="flex items-center space-x-4">
 				<router-link to="/">Main</router-link>
@@ -14,12 +14,8 @@
 	</header>
 </template>
 
-<script>
-export default {};
-</script>
-
 <style lang="scss">
 .app-header {
-	@apply mb-6 py-5 sticky bg-blue-700 text-white;
+	@apply mb-6 py-5 sticky bg-blue-600 text-white;
 }
 </style>

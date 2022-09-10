@@ -1,35 +1,31 @@
 <template>
-	<div class="centered">
-		<h1 class="text-4xl font-bold">{{ page?.title }}</h1>
-	</div>
+	<component :is="layoutComponent" :page="page" :menus="menus"></component>
 </template>
 
 <script>
 export default {
-	name: 'SlugPage',
-	layout: 'default',
-	head() {
-		return {
-			title: this.page?.page_title || this.page?.title,
-			meta: [{ description: this.page?.page_description || '' }],
-		};
-	},
+	name: 'EntryPage',
 	data() {
 		return {
-			page: null,
+			layout: 'default',
 		};
 	},
-	layout(context) {
-		// TODO: dynamic layout
-		return 'default';
+	computed: {
+		layoutComponent() {
+			return () => import(`~/components/layouts/${this.layout}.vue`);
+		},
 	},
 	async asyncData({ $api, route, redirect }) {
 		const path = route.params.slug ? `/${route.params.slug}` : '/';
-		const { page } = await $api.$get('page/byPath', {
+		const { page, menus } = await $api.$get('page/byPath', {
 			params: {
 				path,
 			},
 		});
+
+		if (page && page.redirect) {
+			redirect(page.redirect);
+		}
 
 		if (!page) {
 			redirect('404');
@@ -37,7 +33,9 @@ export default {
 		}
 
 		return {
+			layout: page.layout_filename,
 			page,
+			menus,
 		};
 	},
 };

@@ -5,9 +5,8 @@ export class Page {
 	redirect = '';
 	page_title = '';
 	page_description = '';
-	template_filename = '';
+	layout_filename = 'default';
 	scripts = '';
 	styles = '';
-	json_data = '';
 	hidden = false;
 }

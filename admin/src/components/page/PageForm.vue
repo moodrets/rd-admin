@@ -5,27 +5,20 @@
 		class="grid grid-cols-1 gap-6 xl:grid-cols-2"
 	>
 		<label>
-			<div class="mb-3 text-gray-400 font-bold text-14px">Путь (url - /example)</div>
-			<input
-				type="text"
-				@input="onPathInput($event)"
-				:value="formFields.path"
-				class="rd-form-control"
-				required
-				ref="firstInputRef"
-			/>
+			<div class="mb-3 text-gray-400 font-bold text-14px">Заголовок - (H1)</div>
+			<input type="text" v-model="formFields.title" class="rd-form-control" required ref="firstInputRef" />
 		</label>
 		<label>
-			<div class="mb-3 text-gray-400 font-bold text-14px">Заголовок - (H1)</div>
-			<input type="text" v-model="formFields.title" class="rd-form-control" required />
+			<div class="mb-3 text-gray-400 font-bold text-14px">Путь (url - /example)</div>
+			<input type="text" @input="onPathInput($event)" :value="formFields.path" class="rd-form-control" required />
 		</label>
 		<label>
 			<div class="mb-3 text-gray-400 font-bold text-14px">Редирект</div>
 			<input type="text" v-model="formFields.redirect" class="rd-form-control" />
 		</label>
 		<label>
-			<div class="mb-3 text-gray-400 font-bold text-14px">Файл шаблона (BasePage - по умолчанию)</div>
-			<input type="text" v-model="formFields.template_filename" class="rd-form-control" />
+			<div class="mb-3 text-gray-400 font-bold text-14px">Файл шаблона (default - по умолчанию)</div>
+			<input type="text" v-model="formFields.layout_filename" class="rd-form-control" />
 		</label>
 		<label class="xl:col-span-2">
 			<div class="mb-3 text-gray-400 font-bold text-14px">Текст</div>
@@ -40,23 +33,6 @@
 				{{ 'Description (&#60;meta name="description" /&#62;)' }}
 			</div>
 			<textarea v-model="formFields.page_description" rows="6" class="rd-form-control"></textarea>
-		</label>
-		<label class="xl:col-span-2">
-			<div class="mb-3 text-gray-400 font-bold text-14px flex items-center">
-				<span class="text-rose-400">{{ 'Данные JSON {"some": "value"}' }}</span>
-				<span
-					class="cursor-pointer text-md flex-none w-6 h-6 rounded-full border-2 border-rose-400 text-rose-400 flex items-center justify-center ml-2"
-				>
-					?
-				</span>
-			</div>
-			<codemirror
-				v-model="formFields.json_data"
-				:style="{ height: '200px' }"
-				:indent-with-tab="true"
-				:tab-size="2"
-				:extensions="codeJSON"
-			/>
 		</label>
 		<label>
 			<div class="mb-3 text-gray-400 font-bold text-14px">
@@ -128,10 +104,6 @@ export default {
 		const firstInputRef = ref(null);
 		const codeJSON = [json(), oneDark];
 		const codeHTML = [html(), oneDark];
-
-		if (actionType === 'edit' && formFields.json_data && typeof formFields.json_data === 'object') {
-			formFields.json_data = JSON.stringify(formFields.json_data);
-		}
 
 		const urlParser = (string) => {
 			let finalValue = string.toLowerCase();
