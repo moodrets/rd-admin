@@ -1,6 +1,6 @@
 export default {
 	head: {
-		title: 'app',
+		title: 'RD APP',
 		htmlAttrs: {
 			lang: 'ru',
 		},
@@ -19,7 +19,7 @@ export default {
 	css: ['~/assets/styles/main.scss'],
 	plugins: ['~/plugins/api'],
 	components: true,
-	buildModules: ['@nuxt/postcss8', '@nuxtjs/dotenv'],
+	buildModules: ['@nuxt/postcss8', ['@nuxtjs/dotenv', { path: '../.env' }]],
 	modules: ['@nuxtjs/axios'],
 	build: {
 		postcss: {

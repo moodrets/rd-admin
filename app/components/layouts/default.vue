@@ -3,7 +3,7 @@
 		<app-header></app-header>
 		<main class="centered">
 			<h1 class="text-3xl font-bold mb-6">{{ page?.title }}</h1>
-			<div v-html="page?.content"></div>
+			<div class="mb-6" v-if="page?.content" v-html="page?.content"></div>
 		</main>
 		<app-footer></app-footer>
 	</div>

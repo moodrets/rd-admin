@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import { checkLocalRedirect } from '~/helpers/page.helpers.js';
+
 export default {
 	name: 'EntryPage',
 	data() {
@@ -17,24 +19,34 @@ export default {
 	},
 	async asyncData({ $api, route, redirect }) {
 		const path = route.params.slug ? `/${route.params.slug}` : '/';
-		const { page, menus } = await $api.$get('page/byPath', {
+		let { page, menus } = await $api.$get('page/byPath', {
 			params: {
 				path,
 			},
 		});
+		let layout = page?.layout_filename;
 
-		if (page && page.redirect) {
+		// local redirect
+		if (page && page.redirect && checkLocalRedirect(page.redirect)) {
 			redirect(page.redirect);
 		}
 
+		// other domain redirect
+		if (page && page.redirect && !checkLocalRedirect(page.redirect)) {
+			window.location.href = page.redirect;
+		}
+
 		if (!page) {
-			redirect('404');
-			return;
+			page = {
+				title: 'Страница не найдена',
+				page_title: 'Страница не найдена',
+			};
+			layout = 'default';
 		}
 
 		return {
-			layout: page.layout_filename,
 			page,
+			layout,
 			menus,
 		};
 	},

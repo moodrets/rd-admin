@@ -75,7 +75,6 @@
 <script>
 import { onMounted, ref } from 'vue';
 import { Codemirror } from 'vue-codemirror';
-import { json } from '@codemirror/lang-json';
 import { html } from '@codemirror/lang-html';
 import { oneDark } from '@codemirror/theme-one-dark';
 
@@ -102,7 +101,6 @@ export default {
 	emits: ['emitSubmit'],
 	setup({ formFields, actionType, loading }, context) {
 		const firstInputRef = ref(null);
-		const codeJSON = [json(), oneDark];
 		const codeHTML = [html(), oneDark];
 
 		const urlParser = (string) => {
@@ -130,7 +128,6 @@ export default {
 			firstInputRef,
 			onPathInput,
 			formSubmit,
-			codeJSON,
 			codeHTML,
 		};
 	},
