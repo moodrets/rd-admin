@@ -20,19 +20,21 @@ export class PageService {
 		private menuService: MenuService
 	) {}
 
-	async getByPath(path: string): Promise<any> {
-		const page = await this.pageRepository.findOne({
-			select: {
-				title: true,
-				page_title: true,
-				page_description: true,
-				path: true,
-				layout_filename: true,
-				scripts: true,
-				styles: true,
-				redirect: true,
-				content: true,
-			},
+	async getAppPage(path: string) {
+		const select = {
+			title: true,
+			page_title: true,
+			page_description: true,
+			path: true,
+			layout_filename: true,
+			scripts: true,
+			styles: true,
+			redirect: true,
+			content: true,
+		};
+
+		let page = await this.pageRepository.findOne({
+			select,
 			where: {
 				path,
 				hidden: false,
@@ -49,6 +51,15 @@ export class PageService {
 			page,
 			menus,
 		};
+	}
+
+	async getByPath(path: string): Promise<any> {
+		const page = await this.pageRepository.findOne({
+			where: {
+				path,
+			},
+		});
+		return page;
 	}
 
 	async getPageById(id: number): Promise<Page> {

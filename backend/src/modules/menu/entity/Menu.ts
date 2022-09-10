@@ -20,7 +20,7 @@ export class Menu {
 	@UpdateDateColumn()
 	updated_at: Date;
 
-	@ManyToMany(() => Page, (page) => page.id)
+	@ManyToMany(() => Page, (page) => page.id, { cascade: true, onDelete: 'CASCADE' })
 	@JoinTable()
 	pages: number[];
 

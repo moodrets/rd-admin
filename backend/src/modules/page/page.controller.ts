@@ -8,8 +8,8 @@ export class PageController {
 
 	@HttpCode(200)
 	@Get('byPath')
-	async getByPath(@Query('path') path: string) {
-		return await this.pageService.getByPath(path);
+	async getAppPage(@Query('path') path: string) {
+		return await this.pageService.getAppPage(path);
 	}
 
 	@HttpCode(200)
