@@ -30,8 +30,15 @@ if (data.value.page && data.value.page.redirect && !localRedirect(data.value.pag
     window.location.href = data.value.page.redirect;
 }
 
+// 404
+if (!data.value.page) {
+    page.value.title = 'Страница не найдена';
+    page.value.page_title = 'Страница не найдена';
+    layout = defineAsyncComponent(() => import('~/components/layouts/error.vue'));
+}
+
 // set page data
-if (data.value) {
+if (data.value.page) {
     page.value = data.value.page;
     layout = defineAsyncComponent(() => import(`~/components/layouts/${data.value.page.layout_filename}.vue`));
 }
@@ -44,13 +51,6 @@ if (data.value.menus) {
 // set blocks data
 if (data.value.blocks) {
     blocks.value = data.value.blocks;
-}
-
-// 404
-if (!data.value.page) {
-    page.value.title = 'Страница не найдена';
-    page.value.page_title = 'Страница не найдена';
-    layout = defineAsyncComponent(() => import('~/components/layouts/error.vue'));
 }
 
 // seo
