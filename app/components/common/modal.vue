@@ -47,7 +47,7 @@ const clickHandler = (event: Event) => {
         pointer-events: auto;
 
         .app-modal__body {
-            transform: scale(1);
+            transform: translate3d(0, 0, 0);
         }
     }
 
@@ -57,9 +57,10 @@ const clickHandler = (event: Event) => {
 
     &__body {
         @apply relative m-auto p-4 bg-white rounded-md shadow-md;
-        max-width: var(--modal-width);
+        width: var(--modal-width);
+        max-width: 100%;
         transition: all 0.3s;
-        transform: scale(0.7);
+        transform: translate3d(0, -70px, 0);
     }
 }
 </style>

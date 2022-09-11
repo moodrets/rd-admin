@@ -9,7 +9,10 @@
                 />
                 <router-link class="text-lg font-bold mr-4" to="/">RD App</router-link>
                 <div class="p-2 cursor-pointer rounded-md bg-white text-black" @click="modalToggle('modal-default')">
-                    modal call
+                    modal demo
+                </div>
+                <div class="ml-2 p-2 cursor-pointer rounded-md bg-white text-black" @click="modalToggle('modal-login')">
+                    modal login
                 </div>
             </div>
             <div class="flex items-center space-x-4">

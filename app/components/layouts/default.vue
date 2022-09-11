@@ -15,12 +15,15 @@
             </p>
         </Offcanvas>
         <Modal name="modal-default">
-            <h2 class="font-bold text-2xl mb-6">Modal content</h2>
+            <h2 class="font-bold text-2xl mb-6">Modal demo</h2>
             <p v-for="p in 3">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam ab exercitationem vel perferendis
                 veritatis cumque. Corrupti non, qui alias voluptatem culpa eius porro veritatis? Asperiores sequi odio
                 ratione eaque in.
             </p>
+        </Modal>
+        <Modal name="modal-login">
+            <h2 class="font-bold text-2xl mb-6">Modal login</h2>
         </Modal>
     </div>
 </template>
