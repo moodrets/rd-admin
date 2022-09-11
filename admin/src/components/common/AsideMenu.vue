@@ -1,107 +1,101 @@
 <template>
-	<div class="rd-aside-menu" :class="addClass">
-		<router-link v-for="link in links" :to="link.path" class="rd-aside-menu__item">
-			<i class="rd-aside-menu__item-mainicon rd-icon mr-2">{{ link.iconName }}</i>
-			<span>{{ link.title }}</span>
-			<router-link v-if="link.addPath" :to="link.addPath" class="rd-aside-menu__item-add">
-				<i class="rd-icon">{{ link.addIcon ? link.addIcon : 'library_add' }}</i>
-			</router-link>
-			<div v-else class="ml-auto"></div>
-		</router-link>
-	</div>
+    <div class="rd-aside-menu" :class="addClass">
+        <router-link v-for="link in links" :to="link.path" class="rd-aside-menu__item">
+            <i class="rd-aside-menu__item-mainicon rd-icon mr-2">{{ link.iconName }}</i>
+            <span>{{ link.title }}</span>
+            <router-link v-if="link.addPath" :to="link.addPath" class="rd-aside-menu__item-add">
+                <i class="rd-icon">{{ link.addIcon ? link.addIcon : 'library_add' }}</i>
+            </router-link>
+            <div v-else class="ml-auto"></div>
+        </router-link>
+    </div>
 </template>
 
-<script>
-export default {
-	props: {
-		addClass: '',
-	},
-	name: 'aside-menu',
-	setup() {
-		const links = [
-			{
-				path: '/pages',
-				iconName: 'web',
-				addPath: '/pages/create',
-				title: 'Страницы',
-			},
-			{
-				path: '/menus',
-				iconName: 'view_headline',
-				addPath: '/menus/create',
-				title: 'Меню',
-			},
-			{
-				path: '/blocks',
-				iconName: 'widgets',
-				addPath: '/blocks/create',
-				title: 'Блоки (данные страниц)',
-			},
-			{
-				path: '/users',
-				iconName: 'account_box',
-				addPath: '/users/create',
-				title: 'Пользователи',
-			},
-			{
-				path: '/users/groups',
-				iconName: 'group',
-				addPath: '/users/groups/create',
-				title: 'Группы пользователей',
-			},
-			{
-				path: '/forms',
-				iconName: 'art_track',
-				title: 'Формы',
-				addPath: '/forms/create',
-			},
-			{
-				path: '/modules',
-				iconName: 'settings_input_component',
-				title: 'Модули',
-				addPath: '/modules/create',
-			},
-			{
-				path: '/requests',
-				iconName: 'assignment',
-				title: 'Заявки',
-			},
-			{
-				path: '/settings',
-				iconName: 'settings',
-				title: 'Настройки',
-			},
-		];
+<script setup lang="ts">
+const { addClass } = defineProps({
+    addClass: {
+        type: String,
+    },
+});
 
-		return {
-			links,
-		};
-	},
-};
+const links = [
+    {
+        path: '/pages',
+        iconName: 'web',
+        addPath: '/pages/create',
+        title: 'Страницы',
+    },
+    {
+        path: '/menus',
+        iconName: 'view_headline',
+        addPath: '/menus/create',
+        title: 'Меню',
+    },
+    {
+        path: '/blocks',
+        iconName: 'widgets',
+        addPath: '/blocks/create',
+        title: 'Блоки (данные страниц)',
+    },
+    {
+        path: '/users',
+        iconName: 'account_box',
+        addPath: '/users/create',
+        title: 'Пользователи',
+    },
+    {
+        path: '/users/groups',
+        iconName: 'group',
+        addPath: '/users/groups/create',
+        title: 'Группы пользователей',
+    },
+    {
+        path: '/forms',
+        iconName: 'art_track',
+        title: 'Формы',
+        addPath: '/forms/create',
+    },
+    {
+        path: '/modules',
+        iconName: 'settings_input_component',
+        title: 'Модули',
+        addPath: '/modules/create',
+    },
+    {
+        path: '/requests',
+        iconName: 'assignment',
+        title: 'Заявки',
+    },
+    {
+        path: '/settings',
+        iconName: 'settings',
+        title: 'Настройки',
+    },
+];
 </script>
 
 <style lang="scss">
 .rd-aside-menu {
-	@apply font-semibold flex flex-col space-y-5;
+    @apply font-semibold flex flex-col space-y-5;
 
-	&__item {
-		@apply flex items-center justify-between text-white hover:text-blue-400;
+    &__item {
+        @apply flex items-center justify-between text-white hover:text-blue-400;
 
-		&-mainicon {
-			@apply text-blue-400;
-		}
+        &-mainicon {
+            @apply text-blue-400;
+        }
 
-		&.is-active {
-			@apply text-blue-400;
-		}
+        &.is-active {
+            @apply text-blue-400;
+        }
 
-		&-add {
-			@apply ml-auto text-white hover:text-blue-400;
+        &-add {
+            @apply ml-auto text-white hover:text-blue-400;
 
-			&.is-active {
-				@apply text-blue-400;
-			}
-		}
-	}
+            &.is-active {
+                @apply text-blue-400;
+            }
+        }
+    }
 }
 </style>

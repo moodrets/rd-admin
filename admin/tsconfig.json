@@ -2,17 +2,17 @@
     "include": ["src/**/*.ts", "src/**/*.vue"],
     "exclude": ["node_modules"],
     "compilerOptions": {
-        "allowJs": false,
+        "allowJs": true,
         "baseUrl": ".",
         "resolveJsonModule": true,
         "paths": {
-            "@/*": ["src/*"],
             "~/*": ["src/*"]
         },
         "typeRoots": ["./node_modules/@types", "./node_modules/vuetify/types"],
         "lib": ["es2017", "dom"],
         "declaration": false,
         "target": "es6",
+        "module": "esnext",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,

@@ -6,10 +6,6 @@
     </footer>
 </template>
 
-<script>
-export default {};
-</script>
-
 <style lang="scss">
 .app-footer {
     @apply mb-6 py-5 sticky bg-blue-600 text-white;

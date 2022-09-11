@@ -8,7 +8,9 @@
                     @click="offcanvasToggle('offcanvas-main')"
                 />
                 <router-link class="text-lg font-bold mr-4" to="/">RD App</router-link>
-                <div class="p-2 rounded-md bg-white text-black" @click="modalToggle('modal-default')">modal call</div>
+                <div class="p-2 cursor-pointer rounded-md bg-white text-black" @click="modalToggle('modal-default')">
+                    modal call
+                </div>
             </div>
             <div class="flex items-center space-x-4">
                 <router-link to="/">Main</router-link>
@@ -20,7 +22,7 @@
     </header>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import SvgIcon from '~/components/common/svg-icon.vue';
 import { offcanvasToggle } from '~/reactive/offcanvas';
 import { modalToggle } from '~/reactive/modals';

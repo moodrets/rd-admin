@@ -15,7 +15,7 @@ module.exports = {
     cache: false,
     devtool,
     context: path.resolve(__dirname),
-    entry: { admin: `./src/admin.js` },
+    entry: { admin: `./src/admin.ts` },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].[hash].js',
@@ -25,7 +25,7 @@ module.exports = {
     resolve: {
         extensions: ['*', '.js', '.ts', '.vue', 'scss', 'css'],
         alias: {
-            '@': path.resolve(__dirname, 'src/'),
+            '~': path.resolve(__dirname, 'src/'),
         },
     },
     module: {
