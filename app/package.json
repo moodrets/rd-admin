@@ -1,18 +1,18 @@
 {
-	"private": true,
-	"scripts": {
-		"app:build": "nuxt build",
-		"app:serve": "nuxt dev",
-		"app:generate": "nuxt generate",
-		"app:preview": "nuxt preview",
-		"app:postinstall": "nuxt prepare"
-	},
-	"devDependencies": {
-		"@nuxtjs/tailwindcss": "^5.3.3",
-		"autoprefixer": "^10.4.8",
-		"nuxt": "3.0.0-rc.9",
-		"postcss": "^8.4.16",
-		"sass": "^1.54.9",
-		"tailwindcss": "^3.1.8"
-	}
+    "private": true,
+    "scripts": {
+        "app:build": "nuxt build",
+        "app:serve": "nuxt dev",
+        "app:generate": "nuxt generate",
+        "app:preview": "nuxt preview",
+        "app:postinstall": "nuxt prepare"
+    },
+    "devDependencies": {
+        "@nuxtjs/tailwindcss": "^5.3.3",
+        "autoprefixer": "^10.4.8",
+        "nuxt": "3.0.0-rc.9",
+        "postcss": "^8.4.16",
+        "sass": "^1.54.9",
+        "tailwindcss": "^3.1.8"
+    }
 }

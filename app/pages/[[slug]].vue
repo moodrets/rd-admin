@@ -20,6 +20,13 @@ const { data } = await useFetch<any>('/page/byPath', {
     initialCache: false,
 });
 
+// 404
+if (!data.value.page) {
+    page.value.title = 'Страница не найдена';
+    page.value.page_title = 'Страница не найдена';
+    layout = defineAsyncComponent(() => import('~/components/layouts/error.vue'));
+}
+
 // local redirect
 if (data.value.page && data.value.page.redirect && localRedirect(data.value.page.redirect)) {
     navigateTo(data.value.page.redirect);
@@ -28,13 +35,6 @@ if (data.value.page && data.value.page.redirect && localRedirect(data.value.page
 // other domain redirect
 if (data.value.page && data.value.page.redirect && !localRedirect(data.value.page.redirect)) {
     window.location.href = data.value.page.redirect;
-}
-
-// 404
-if (!data.value.page) {
-    page.value.title = 'Страница не найдена';
-    page.value.page_title = 'Страница не найдена';
-    layout = defineAsyncComponent(() => import('~/components/layouts/error.vue'));
 }
 
 // set page data

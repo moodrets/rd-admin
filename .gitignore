@@ -4,6 +4,12 @@
 
 # app
 app/node_modules
+app/*.log*
+app/.nuxt
+app/.nitro
+app/.cache
+app/.output
+app/.env
 
 # admin
 admin/node_modules
