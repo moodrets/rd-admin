@@ -1,22 +1,21 @@
-import { Type } from 'class-transformer';
-import { IsBoolean, IsJSON, IsOptional, IsString } from 'class-validator';
-import { CreateUpdatePageDto } from 'src/modules/page/dto/CreateUpdatePage.dto';
+import { IsArray, IsBoolean, IsOptional, IsString, ValidateNested } from 'class-validator';
 
 export class CreateUpdateMenuDto {
-	@Type(() => CreateUpdatePageDto)
-	pages: number[];
+    @IsString()
+    title: string;
 
-	@IsString()
-	title: string;
+    @IsString()
+    name: string;
 
-	@IsString()
-	name: string;
+    @IsOptional()
+    @IsBoolean()
+    global: boolean;
 
-	@IsOptional()
-	@IsBoolean()
-	global: boolean;
+    @IsOptional()
+    @IsBoolean()
+    hidden: boolean;
 
-	@IsOptional()
-	@IsBoolean()
-	hidden: boolean;
+    @IsOptional()
+    @IsArray()
+    pages: number[];
 }

@@ -21,7 +21,7 @@ import { ref } from 'vue';
 import { apiGetPageList } from '~/api/page/apiGetPageList';
 import { apiDeletePage } from '~/api/page/apiDeletePage';
 import { apiUpdatePage } from '~/api/page/apiUpdatePage';
-import { clearPageData } from '~/helpers/pageHelpers';
+import { updatePageData } from '~/helpers/pageHelpers';
 import PagesList from '~/components/page/List.vue';
 
 const pagesList = ref([]);
@@ -41,7 +41,7 @@ const onDeletePage = async (page: any) => {
 };
 
 const onVisiblePage = async (page: any) => {
-    const payload = clearPageData(page);
+    const payload = updatePageData(page);
     payload.hidden = false;
     try {
         await apiUpdatePage(payload);
@@ -50,7 +50,7 @@ const onVisiblePage = async (page: any) => {
 };
 
 const onHiddenPage = async (page: any) => {
-    const payload = clearPageData(page);
+    const payload = updatePageData(page);
     payload.hidden = true;
     try {
         await apiUpdatePage(payload);

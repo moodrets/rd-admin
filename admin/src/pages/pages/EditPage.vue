@@ -15,12 +15,13 @@
 import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { apiGetPageById } from '~/api/page/apiGetPageById';
-import { clearPageData } from '~/helpers/pageHelpers';
+import { updatePageData } from '~/helpers/pageHelpers';
 import { apiUpdatePage } from '~/api/page/apiUpdatePage';
 import PageForm from '~/components/page/PageForm.vue';
+import { Page } from '~/models/page/PageModel';
 
 const router = useRouter();
-const formFields = ref({});
+const formFields = ref<Page>(new Page());
 const loading = ref(true);
 const pageId = router.currentRoute.value.params.id;
 
@@ -28,6 +29,7 @@ onBeforeMount(async () => {
     try {
         const response = await apiGetPageById(+pageId);
         formFields.value = response;
+        formFields.value.hidden = response.hidden === 1 ? true : false;
     } catch (error) {
         router.push({ name: 'admin-pages' });
     } finally {
@@ -37,7 +39,7 @@ onBeforeMount(async () => {
 
 const onFormSubmit = async (page: any) => {
     loading.value = true;
-    const formData = clearPageData(page);
+    const formData = updatePageData(page);
     try {
         if (confirm(`Вы уверены что хотить обновить страницу`)) {
             await apiUpdatePage(formData);

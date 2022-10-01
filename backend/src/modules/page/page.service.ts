@@ -1,8 +1,8 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { Knex } from 'knex';
+import { InjectConnection } from 'nest-knexjs';
 import { MenuService } from 'src/modules/menu/menu.service';
 import { CreateUpdatePageDto } from 'src/modules/page/dto/CreateUpdatePage.dto';
-import { Page } from 'src/modules/page/entity/Page';
 import {
     PAGE_CREATED,
     PAGE_DELETED,
@@ -10,96 +10,69 @@ import {
     PAGE_UPDATED,
     PAGE_URL_EXIST,
 } from 'src/modules/page/messages/messages';
-import { Repository } from 'typeorm';
 
 @Injectable()
 export class PageService {
-    constructor(
-        @InjectRepository(Page)
-        private pageRepository: Repository<Page>,
-        private menuService: MenuService
-    ) {}
+    constructor(@InjectConnection() private readonly knex: Knex, private menuService: MenuService) {}
 
     async getAppPage(path: string) {
-        const select = {
-            title: true,
-            page_title: true,
-            page_description: true,
-            path: true,
-            layout_filename: true,
-            scripts: true,
-            styles: true,
-            redirect: true,
-            content: true,
-        };
+        if (!path) {
+            throw new NotFoundException(HttpStatus.NOT_FOUND, PAGE_NOT_FOUND);
+        }
 
-        let page = await this.pageRepository.findOne({
-            select,
-            where: {
-                path,
-                hidden: false,
-            },
-        });
+        let page = await this.knex('pages').select('*').where({ path, hidden: false });
+        page = page[0];
 
-        const globalMenus = await this.menuService.getGlobalMenus();
-
-        const menus = {
-            ...globalMenus,
-        };
+        // const menus = [];
+        // const globalMenus = await this.menuService.getGlobalMenus();
+        // menus.push(...globalMenus);
 
         return {
             page,
-            menus,
+            // menus,
         };
     }
 
     async getByPath(path: string): Promise<any> {
-        const page = await this.pageRepository.findOne({
-            where: {
-                path,
-            },
-        });
+        let page = await this.knex('pages').select('*').where({ path });
+        page = page[0];
         return page;
     }
 
-    async getPageById(id: number): Promise<Page> {
-        const response = await this.pageRepository.findOneBy({ id });
-        if (response) {
-            return response;
+    async getPageById(id: number) {
+        let page = await this.knex('pages').select('*').where({ id });
+        page = page[0];
+        if (page) {
+            return page;
         }
         throw new HttpException(PAGE_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     async getList() {
-        return await this.pageRepository.find({
-            take: 20,
-        });
+        return this.knex('pages').select('*').limit(10);
     }
 
     async create(dto: CreateUpdatePageDto) {
         const existPage = await this.getByPath(dto.path);
-
         if (existPage) {
             throw new HttpException(PAGE_URL_EXIST, HttpStatus.CONFLICT);
         }
-        const createdPage = await this.pageRepository.save(dto);
-
+        const createdPage = await this.knex('pages').insert(dto);
         if (createdPage) {
             throw new HttpException(PAGE_CREATED, HttpStatus.OK);
         }
     }
 
     async delete(id: number) {
-        const response = await this.pageRepository.delete({ id });
-        if (!response.affected) {
+        const response = await this.knex('pages').where({ id }).del();
+        if (!response) {
             throw new HttpException(PAGE_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
         throw new HttpException(PAGE_DELETED, HttpStatus.OK);
     }
 
     async update(dto: CreateUpdatePageDto) {
-        const updatedPage = await this.pageRepository.save(dto);
-
+        const updatedPage = await this.knex('pages').update(dto).where({ path: dto.path });
         if (updatedPage) {
             throw new HttpException(PAGE_UPDATED, HttpStatus.OK);
         }

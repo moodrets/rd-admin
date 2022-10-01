@@ -1,70 +1,52 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Knex } from 'knex';
+import { InjectConnection } from 'nest-knexjs';
 import { CreateUpdateMenuDto } from 'src/modules/menu/dto/CreateUpdateMenu.dto';
-import { Menu } from 'src/modules/menu/entity/Menu';
-import { Repository } from 'typeorm';
-import { MENU_NAME_EXIST } from 'src/modules/menu/messages/messages';
+import { MENU_NAME_EXIST, MENU_CREATED } from 'src/modules/menu/messages/messages';
+import { MenuModel } from 'src/modules/menu/models/MenuModel';
 
 @Injectable()
 export class MenuService {
-	constructor(
-		@InjectRepository(Menu)
-		private menuRepository: Repository<Menu>
-	) {}
+    constructor(@InjectConnection() private readonly knex: Knex) {}
 
-	async create(dto: CreateUpdateMenuDto) {
-		const existMenu = await this.getByName(dto.name);
-		if (existMenu) {
-			throw new HttpException(MENU_NAME_EXIST, HttpStatus.CONFLICT);
-		}
-		return await this.menuRepository.save(dto);
-	}
+    async create(dto: CreateUpdateMenuDto) {
+        const existMenu = await this.getByName(dto.name);
+        if (existMenu) {
+            throw new HttpException(MENU_NAME_EXIST, HttpStatus.CONFLICT);
+        }
+        const createMenuData = {
+            title: dto.title,
+            name: dto.name,
+            global: dto.global,
+            hidden: dto.hidden,
+        };
 
-	async getByName(name: string): Promise<Menu> {
-		return await this.menuRepository.findOne({
-			where: {
-				name,
-			},
-		});
-	}
+        const createMenu = await this.knex('menus').insert(createMenuData);
 
-	async getGlobalMenus(): Promise<{ [key: string]: Menu }> {
-		const response = {};
-		const menus = await this.menuRepository.find({
-			select: {
-				id: true,
-				title: true,
-				name: true,
-				global: true,
-			},
-			where: {
-				global: true,
-				hidden: false,
-			},
-		});
-		menus.forEach((menu: Menu) => {
-			response[menu.name] = menu;
-		});
-		return response;
-	}
+        if (dto.pages && dto.pages.length) {
+            let getCreatedMenu = await this.getByName(dto.name);
+            if (getCreatedMenu) {
+                dto.pages.forEach(async (page_id) => {
+                    await this.knex('pages_menus').insert({
+                        menu_id: getCreatedMenu.id,
+                        page_id,
+                    });
+                });
+            }
+        }
 
-	async getMenusByPage(id: number): Promise<{ [key: string]: Menu }> {
-		const response = {};
-		// const menus = await this.menuRepository.find({
-		// 	select: {
-		// 		id: true,
-		// 		title: true,
-		// 		name: true,
-		// 		global: true,
-		// 	},
-		// 	where: {
-		// 		global: true,
-		// 		hidden: false,
-		// 	},
-		// });
-		// menus.forEach((menu: Menu) => {
-		// 	response[menu.name] = menu;
-		// });
-		return response;
-	}
+        if (createMenu) {
+            throw new HttpException(MENU_CREATED, HttpStatus.OK);
+        }
+    }
+
+    async getByName(name: string) {
+        let res = await this.knex('menus').select('*').where({ name });
+        let menu = res[0];
+        return menu;
+    }
+
+    async getGlobalMenus() {
+        return this.knex('menus').select('*').where({ global: true });
+    }
 }

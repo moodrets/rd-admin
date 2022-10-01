@@ -15,7 +15,7 @@
 import { reactive, ref } from 'vue';
 import PageForm from '~/components/page/PageForm.vue';
 import { Page } from '~/models/page/PageModel';
-import { clearPageData } from '~/helpers/pageHelpers';
+import { createPageData } from '~/helpers/pageHelpers';
 import { apiCreatePage } from '~/api/page/apiCreatePage';
 import { useRouter } from 'vue-router';
 
@@ -25,7 +25,7 @@ const router = useRouter();
 
 const onFormSubmit = async (page: any) => {
     loading.value = true;
-    const formData = clearPageData(page);
+    const formData = createPageData(page);
     try {
         await apiCreatePage(formData);
         router.push({ name: 'admin-pages' });

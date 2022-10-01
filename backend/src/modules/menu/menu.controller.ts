@@ -4,11 +4,11 @@ import { MenuService } from 'src/modules/menu/menu.service';
 
 @Controller('menu')
 export class MenuController {
-	constructor(private menuService: MenuService) {}
+    constructor(private menuService: MenuService) {}
 
-	@HttpCode(201)
-	@Post('create')
-	async create(@Body() dto: CreateUpdateMenuDto) {
-		return this.menuService.create(dto);
-	}
+    @HttpCode(201)
+    @Post('create')
+    async create(@Body() dto: CreateUpdateMenuDto) {
+        return this.menuService.create(dto);
+    }
 }
