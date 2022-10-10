@@ -6,24 +6,30 @@ import (
 	"net/http"
 )
 
-func GetAppPage() http.HandlerFunc {
+func GetPageApp() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if (r.Method == "GET") {
 			path := r.URL.Query().Get("path")
 			page := services.GetAppPage(path)
-			pageJson, err := json.Marshal(page)
-			if err != nil{
-				return
+			responseData := map[string]interface{}{
+				"page": page,
+				"menus": nil,
+				"blocks": nil,
 			}
-			// result := make(map[string]string)
-			// resultJson, err := json.Marshal(result)
-			// if err != nil{
-			// 	return
-			// }
-			// result["page"] = pageJSON
+			responseJSON, _ := json.Marshal(responseData)
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusOK)
-			w.Write(pageJson)
+			w.Write(responseJSON)
+			return
+		}
+
+		w.WriteHeader(http.StatusNotFound)
+	}
+}
+
+func GetPageById() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if (r.Method == "GET") {
 			return
 		}
 		w.WriteHeader(http.StatusNotFound)
@@ -39,7 +45,7 @@ func GetPagesList() http.HandlerFunc {
 	}
 }
 
-func PageCreate() http.HandlerFunc {
+func CreatePage() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if (r.Method == "POST") {
 			return
@@ -48,7 +54,7 @@ func PageCreate() http.HandlerFunc {
 	}
 }
 
-func PageUpdate() http.HandlerFunc {
+func UpdatePage() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if (r.Method == "PUT") {
 
@@ -57,7 +63,7 @@ func PageUpdate() http.HandlerFunc {
 	}
 }
 
-func PageDelete() http.HandlerFunc {
+func DeletePage() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if (r.Method == "DELETE") {
 

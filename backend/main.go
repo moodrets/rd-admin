@@ -9,5 +9,5 @@ import (
 func main() {
 	db.CreateTables()
 	routes.PageRoutes()
-	http.ListenAndServe(":1346", nil)
+	http.ListenAndServe("127.0.0.1:1346", nil)
 }

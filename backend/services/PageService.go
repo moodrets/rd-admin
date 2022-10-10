@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func GetAppPage(path string) models.AppPage {
+func GetAppPage(path string) interface{} {
 	db := db.Connection()
 	defer db.Close()
 
@@ -47,5 +47,10 @@ func GetAppPage(path string) models.AppPage {
             log.Fatal(err)
         }
     }
+
+	if (page.Id == 0) {
+		return nil
+	}
+
 	return page
 }
