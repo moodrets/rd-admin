@@ -2,7 +2,7 @@
     "private": true,
     "scripts": {
         "app:build": "nuxt build",
-        "app:serve": "nuxt dev",
+        "app:serve": "nuxt dev --port=1344",
         "app:generate": "nuxt generate",
         "app:preview": "nuxt preview",
         "app:postinstall": "nuxt prepare"
