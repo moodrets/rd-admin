@@ -1,0 +1,17 @@
+.rd-admin-nav {
+    &__item {
+        @apply mb-1 flex items-center;
+
+        &-link {
+            @apply flex items-center py-1 font-semibold cursor-pointer;
+        }
+
+        &-mainicon {
+            font-size: 24px;
+        }
+
+        &-addicon {
+            @apply ml-auto cursor-pointer;
+        }
+    }
+}
