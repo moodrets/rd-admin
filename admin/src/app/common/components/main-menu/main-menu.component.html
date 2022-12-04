@@ -1,15 +1,21 @@
-<nav class="rd-admin-nav sticky top-[100px]">
+<nav class="rd-admin-nav sticky top-[100px] bg-white p-4 shadow-xl rounded-md">
     <ul>
         <li class="rd-admin-nav__item" *ngFor="let link of links">
-            <a class="rd-admin-nav__item-link" [routerLink]="link.path">
+            <a
+                class="rd-admin-nav__item-link"
+                [routerLink]="link.path"
+                routerLinkActive="is-active"
+                [routerLinkActiveOptions]="{ exact: true }"
+            >
                 <i class="rd-admin-nav__item-mainicon rd-icon mr-2">{{ link.iconName }}</i>
                 <span>{{ link.title }}</span>
             </a>
             <i
-                class="rd-admin-nav__item-addicon rd-icon"
+                class="rd-admin-nav__item-addicon rd-icon outline-none"
                 title="Создать"
                 *ngIf="link.addPath"
                 [routerLink]="link.addPath"
+                routerLinkActive="is-active"
             >
                 library_add
             </i>

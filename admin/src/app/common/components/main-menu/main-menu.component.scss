@@ -4,6 +4,11 @@
 
         &-link {
             @apply flex items-center py-1 font-semibold cursor-pointer flex-1;
+
+            &:hover,
+            &.is-active {
+                @apply text-indigo-600;
+            }
         }
 
         &-mainicon {
@@ -12,6 +17,11 @@
 
         &-addicon {
             @apply ml-auto cursor-pointer;
+
+            &:hover,
+            &.is-active {
+                @apply text-indigo-600;
+            }
         }
     }
 }

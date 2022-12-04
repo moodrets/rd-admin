@@ -68,5 +68,10 @@ export class MainMenuComponent {
             iconName: 'settings',
             title: 'Настройки',
         },
+        {
+            path: '/help',
+            iconName: 'help',
+            title: 'Справка',
+        },
     ]
 }
