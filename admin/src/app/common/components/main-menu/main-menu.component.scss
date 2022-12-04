@@ -1,13 +1,13 @@
 .rd-admin-nav {
     &__item {
-        @apply mb-1 flex items-center;
+        @apply mb-1 flex items-center text-[18px];
 
         &-link {
-            @apply flex items-center py-1 font-semibold cursor-pointer;
+            @apply flex items-center py-1 font-semibold cursor-pointer flex-1;
         }
 
         &-mainicon {
-            font-size: 24px;
+            @apply text-[24px];
         }
 
         &-addicon {

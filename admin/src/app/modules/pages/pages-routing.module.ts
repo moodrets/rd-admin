@@ -1,23 +1,26 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { PagesComponent } from 'src/app/modules/pages/pages/pages.component'
+import { PageFormComponent } from 'src/app/modules/pages/components/page-form/page-form.component'
+import { PagesListComponent } from 'src/app/modules/pages/pages/pages-list/pages-list.component'
 
 const routes: Routes = [
     {
         path: '',
-        component: PagesComponent,
+        component: PagesListComponent,
     },
     {
         path: 'create',
-        component: PagesComponent,
+        component: PageFormComponent,
+        data: {
+            actionType: 'create',
+        },
     },
     {
         path: 'update',
-        component: PagesComponent,
-    },
-    {
-        path: 'delete',
-        component: PagesComponent,
+        component: PageFormComponent,
+        data: {
+            actionType: 'update',
+        },
     },
 ]
 

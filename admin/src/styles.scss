@@ -1,6 +1,11 @@
+@tailwind base;
+
 @import './styles/base/icons.scss';
 @import './styles/base/defaults.scss';
 
-@tailwind base;
+// elements
+@import './styles/elements/buttons.scss';
+@import './styles/elements/forms.scss';
+
 @tailwind components;
 @tailwind utilities;
