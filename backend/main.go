@@ -1,13 +1,13 @@
 package main
 
 import (
-	"backend/db"
 	"backend/routes"
-	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	db.CreateTables()
-	routes.PageRoutes()
-	http.ListenAndServe("127.0.0.1:1346", nil)
+	ginRouter := gin.Default()
+	routes.PageRoutes(ginRouter)
+	ginRouter.Run("127.0.0.1:1346")
 }

@@ -1,31 +1,29 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-    "include": ["src/**/*.ts", "src/**/*.vue"],
-    "exclude": ["node_modules", "./dist/**/*"],
+    "compileOnSave": false,
     "compilerOptions": {
-        "allowJs": true,
-        "baseUrl": ".",
-        "resolveJsonModule": true,
-        "outDir": "./dist/build",
-        "paths": {
-            "~/*": ["src/*"]
-        },
-        "typeRoots": ["./node_modules/@types", "./node_modules/vuetify/types"],
-        "lib": ["es2017", "dom"],
-        "declaration": false,
-        "target": "es6",
-        "module": "esnext",
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "allowSyntheticDefaultImports": true,
-        "allowUnreachableCode": false,
-        "allowUnusedLabels": false,
+        "baseUrl": "./",
+        "outDir": "./dist/out-tsc",
         "forceConsistentCasingInFileNames": true,
-        "noEmitOnError": false,
-        "noFallthroughCasesInSwitch": true,
-        "noImplicitReturns": true,
-        "pretty": true,
-        "sourceMap": true,
         "strict": true,
-        "moduleResolution": "node"
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": false,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "sourceMap": true,
+        "declaration": false,
+        "downlevelIteration": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "target": "es2015",
+        "module": "es2020",
+        "lib": ["es2020", "dom"]
+    },
+    "angularCompilerOptions": {
+        "enableI18nLegacyMessageIdFormat": false,
+        "strictInjectionParameters": true,
+        "strictInputAccessModifiers": true,
+        "strictTemplates": true
     }
 }

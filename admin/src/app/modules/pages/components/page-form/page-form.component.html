@@ -1,0 +1,51 @@
+<form (submit)="formSubmit($event)" class="pb-20">
+    <div class="lg:flex lg:flex-wrap">
+        <label class="mb-5 block lg:w-1/2 lg:pr-3">
+            <div class="mb-2 font-medium">Путь страницы (url)</div>
+            <input type="text" class="rd-form-field" #firstInput />
+        </label>
+        <label class="mb-5 block lg:w-1/2 lg:pl-3">
+            <div class="mb-2 font-medium">Заголовок страницы (h1)</div>
+            <input type="text" class="rd-form-field" />
+        </label>
+        <label class="mb-5 block w-full">
+            <div class="mb-2 font-medium">Контент страницы</div>
+            <textarea class="rd-form-field" rows="8"></textarea>
+        </label>
+        <label class="mb-5 block lg:w-1/2 lg:pr-3">
+            <div class="mb-2 font-medium">Редирект</div>
+            <input type="text" class="rd-form-field" />
+        </label>
+        <label class="mb-5 block lg:w-1/2 lg:pl-3">
+            <div class="mb-2 font-medium">Шаблон страницы (имя файла)</div>
+            <input type="text" class="rd-form-field" />
+        </label>
+        <label class="mb-5 block lg:w-1/2 lg:pr-3">
+            <div class="mb-2 font-medium">Title страницы</div>
+            <textarea class="rd-form-field" rows="5"></textarea>
+        </label>
+        <label class="mb-5 block lg:w-1/2 lg:pl-3">
+            <div class="mb-2 font-medium">Description страницы</div>
+            <textarea class="rd-form-field" rows="5"></textarea>
+        </label>
+        <label class="mb-5 block lg:w-1/2 lg:pr-3">
+            <div class="mb-2 font-medium">Скрипты страницы (script)</div>
+            <textarea class="rd-form-field" rows="5"></textarea>
+        </label>
+        <label class="mb-5 block lg:w-1/2 lg:pl-3">
+            <div class="mb-2 font-medium">Стили страницы (style, link)</div>
+            <textarea class="rd-form-field" rows="5"></textarea>
+        </label>
+        <div class="w-full mb-6">
+            <div class="inline-flex items-center cursor-pointer">
+                <i class="rd-icon text-red-600 text-[28px] mr-2">visibility_off</i>
+                <div class="font-medium">Скрыть страницу</div>
+            </div>
+        </div>
+    </div>
+    <div class="fixed left-0 right-0 bottom-0 flex justify-center bg-gray-300 py-3 z-50">
+        <button class="rd-button rd-button--simple">
+            {{ (routeData$ | async)?.actionType === 'create' ? 'Создать' : 'Редактировать' }}
+        </button>
+    </div>
+</form>

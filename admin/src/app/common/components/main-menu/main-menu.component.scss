@@ -1,0 +1,27 @@
+.rd-admin-nav {
+    &__item {
+        @apply mb-1 flex items-center text-[18px];
+
+        &-link {
+            @apply flex items-center py-1 font-semibold cursor-pointer flex-1;
+
+            &:hover,
+            &.is-active {
+                @apply text-indigo-600;
+            }
+        }
+
+        &-mainicon {
+            @apply text-[24px];
+        }
+
+        &-addicon {
+            @apply ml-auto cursor-pointer;
+
+            &:hover,
+            &.is-active {
+                @apply text-indigo-600;
+            }
+        }
+    }
+}

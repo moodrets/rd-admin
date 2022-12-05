@@ -1,73 +1,21 @@
 package controllers
 
 import (
-	"backend/services"
-	"encoding/json"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-func GetPageApp() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		if (r.Method == "GET") {
-			path := r.URL.Query().Get("path")
-			page := services.GetAppPage(path)
-			responseData := map[string]interface{}{
-				"page": page,
-				"menus": nil,
-				"blocks": nil,
-			}
-			responseJSON, _ := json.Marshal(responseData)
-			w.Header().Set("Content-Type", "application/json")
-			w.WriteHeader(http.StatusOK)
-			w.Write(responseJSON)
-			return
-		}
+type PageController struct {}
 
-		w.WriteHeader(http.StatusNotFound)
-	}
+func (controller *PageController) GetPageByPath(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"samsa": "samsu",
+	})
 }
 
-func GetPageById() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		if (r.Method == "GET") {
-			return
-		}
-		w.WriteHeader(http.StatusNotFound)
-	}
-}
-
-func GetPagesList() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request){
-		if (r.Method == "GET") {
-			return
-		}
-		w.WriteHeader(http.StatusNotFound)
-	}
-}
-
-func CreatePage() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		if (r.Method == "POST") {
-			return
-		}
-		w.WriteHeader(http.StatusNotFound)
-	}
-}
-
-func UpdatePage() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		if (r.Method == "PUT") {
-
-		}
-		w.WriteHeader(http.StatusNotFound)
-	}
-}
-
-func DeletePage() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		if (r.Method == "DELETE") {
-
-		}
-		w.WriteHeader(http.StatusNotFound)
-	}
-}
+func (controller *PageController) GetById(c *gin.Context) {}
+func (controller *PageController) GetList(c *gin.Context) {}
+func (controller *PageController) Create(c *gin.Context) {}
+func (controller *PageController) Update(c *gin.Context) {}
+func (controller *PageController) Delete(c *gin.Context) {}
