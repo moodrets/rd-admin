@@ -1,17 +1,22 @@
 package controllers
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 )
 
-type PageController struct {}
+type PageController struct {
+}
 
 func (controller *PageController) GetPageByPath(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"samsa": "samsu",
-	})
+	// db, err := db.Connect()
+    // if err != nil {
+    //     log.Fatal(err.Error())
+    // }
+
+	// if err := db.Where("path= ?", c.Param("id")).First(&grocery).Error; err != nil {
+    //     c.JSON(http.StatusNotFound, gin.H{"error": "Grocery not found"})
+    //     return
+    // }
 }
 
 func (controller *PageController) GetById(c *gin.Context) {}

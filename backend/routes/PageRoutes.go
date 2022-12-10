@@ -6,12 +6,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func PageRoutes(route *gin.Engine) {
+func PageRoutes(router *gin.Engine) {
 	pageController := new(controllers.PageController)
-	route.GET("/pages/list", pageController.GetList)
-	route.GET("/pages/byPath", pageController.GetPageByPath)
-	route.GET("/pages/byId", pageController.GetById)
-	route.POST("/pages/create", pageController.Create)
-	route.PUT("/pages/update/:id", pageController.Update)
-	route.DELETE("/pages/delete/:id", pageController.Delete)
+	router.GET("/pages/list", pageController.GetList)
+	router.GET("/pages/byPath", pageController.GetPageByPath)
+	router.GET("/pages/byId", pageController.GetById)
+	router.POST("/pages/create", pageController.Create)
+	router.PUT("/pages/update/:id", pageController.Update)
+	router.DELETE("/pages/delete/:id", pageController.Delete)
 }
