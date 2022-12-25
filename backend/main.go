@@ -10,7 +10,6 @@ import (
 )
 
 func main() {
-
 	db,err := db.Connect()
 	if err != nil {
         log.Fatal(err.Error())
@@ -20,7 +19,7 @@ func main() {
 	db.AutoMigrate(&models.Menu{})
 	db.AutoMigrate(&models.MenuItem{})
 
-	ginRouter := gin.Default()
-	routes.PageRoutes(ginRouter)
-	ginRouter.Run("127.0.0.1:1346")
+	router := gin.Default()
+	routes.PageRoutes(router)
+	router.Run("127.0.0.1:1346")
 }

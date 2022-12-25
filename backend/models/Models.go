@@ -2,47 +2,43 @@ package models
 
 import (
 	"time"
-
-	"gorm.io/gorm"
 )
 
 type Page struct {
-	gorm.Model
-	ID        uint `gorm:"primaryKey"`
-	CreatedAt time.Time `gorm:"autoCreateTime"`
-	UpdatedAt time.Time `gorm:"autoUpdateTime"`
-	PageTitle string `gorm:"type:text"`
-	PageDescription string `gorm:"type:text"`
-	Path string `gorm:"unique;not null"`
-	Redirect string `gorm:"type:text"`
-	Title string `gorm:"type:text"`
-	Content string `gorm:"type:longtext"`
-	LayoutFilename string `gorm:"type:text"`
-	Scripts string `gorm:"type:longtext"`
-	Styles string `gorm:"type:longtext"`
-	Hidden bool `gorm:"type:bool;default:false"`
+	Id        uint `gorm:"primaryKey" json:"id"`
+	CreatedAt time.Time `gorm:"autoCreateTime" json:"created_at"`
+	UpdatedAt time.Time `gorm:"autoUpdateTime" json:"updated_at"`
+	PageTitle string `gorm:"type:text" json:"page_title"`
+	PageDescription string `gorm:"type:text" json:"page_description"`
+	Path string `gorm:"unique;not null" json:"path"`
+	Redirect string `gorm:"type:text" json:"redirect"`
+	Title string `gorm:"type:text" json:"title"`
+	Content string `gorm:"type:longtext" json:"content"`
+	LayoutFilename string `gorm:"type:text" json:"layout_filename"`
+	Scripts string `gorm:"type:longtext" json:"scripts"`
+	Styles string `gorm:"type:longtext" json:"styles"`
+	Hidden bool `gorm:"type:bool;default:false" json:"hidden"`
+	Menus []Menu `gorm:"many2many:pages_menu;" json:"menus"`
 }
 
 type Menu struct {
-	gorm.Model
-	ID        uint `gorm:"primaryKey"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	Title string `gorm:"type:text"`
-	Name string `gorm:"unique;not null;varchar(255)"`
-	Hidden bool `gorm:"type:bool;default:false"`
-	Global bool `gorm:"type:bool;default:false"`
+	Id        uint `gorm:"primaryKey" json:"id"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	Title string `gorm:"type:text" json:"title"` 
+	Name string `gorm:"unique;not null;varchar(255)" json:"name"`
+	Hidden bool `gorm:"type:bool;default:false" json:"hidden"`
+	Global bool `gorm:"type:bool;default:false" json:"global"`
 }
 
 type MenuItem struct {
-	gorm.Model
-	ID        uint      `gorm:"primaryKey"`
-	CreatedAt time.Time `gorm:"autoCreateTime"`
-	UpdatedAt time.Time `gorm:"autoUpdateTime"`
-	Title string `gorm:"type:text"`
-	Url string `gorm:"type:text"`
-	Icon string `gorm:"type:text"`
-	Hidden bool `gorm:"type:bool;default:false"`
-	MenuId Menu
-	ParentId uint
+	Id        uint      `gorm:"primaryKey" json:"id"`
+	CreatedAt time.Time `gorm:"autoCreateTime" json:"created_at"`
+	UpdatedAt time.Time `gorm:"autoUpdateTime" json:"updated_at"`
+	Title string `gorm:"type:text" json:"title"`
+	Url string `gorm:"type:text" json:"url"`
+	Icon string `gorm:"type:text" json:"icon"`
+	Hidden bool `gorm:"type:bool;default:false" json:"hidden"`
+	MenuId Menu `gorm:"foreignkey:Id" json:"menu_id"`
+	ParentId uint `json:"parent_id"`
 }

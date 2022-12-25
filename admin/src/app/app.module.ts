@@ -10,6 +10,8 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { HeaderComponent } from './common/components/header/header.component'
 import { MainPageComponent } from './common/pages/main-page/main-page.component'
+import { OffcanvasComponent } from './common/components/offcanvas/offcanvas.component'
+import { OffcanvasService } from 'src/app/common/services/OffcanvasService'
 
 @NgModule({
     declarations: [
@@ -20,9 +22,10 @@ import { MainPageComponent } from './common/pages/main-page/main-page.component'
         HeaderComponent,
         NotFoundPageComponent,
         MainPageComponent,
+        OffcanvasComponent,
     ],
     imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule],
-    providers: [],
+    providers: [OffcanvasService],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,0 +1,21 @@
+.rd-offcanvas {
+    @apply fixed inset-0 z-100 bg-indigo-900 bg-opacity-75 lg:hidden;
+    transition: all 0.3s;
+    opacity: 0;
+    visibility: hidden;
+
+    &.is-open {
+        opacity: 1;
+        visibility: visible;
+
+        .rd-offcanvas__body {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    &__body {
+        @apply bg-white overflow-y-auto p-5 h-full w-[310px] shadow-lg;
+        transform: translate3d(-120%, 0, 0);
+        transition: all 0.3s;
+    }
+}
