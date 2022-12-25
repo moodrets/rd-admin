@@ -7,7 +7,9 @@ import (
 	"log"
 )
 
-func PagesGetByPath(path string) (*models.Page, error) {
+type PageService struct {}
+
+func (p *PageService) PagesGetByPath(path string) (*models.Page, error) {
 	db, err := db.Connect()
 	if err != nil {
 		log.Fatal(err.Error())

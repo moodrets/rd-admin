@@ -9,8 +9,10 @@ import (
 
 type PageController struct {}
 
+var pageService = new(services.PageService)
+
 func (controller *PageController) GetPageByPath(c *gin.Context) {
-	page, err := services.PagesGetByPath(c.Query("path"))
+	page, err := pageService.PagesGetByPath(c.Query("path"))
 
 	if err != nil {	
 		c.JSON(http.StatusNotFound, gin.H{"message": err.Error()})
