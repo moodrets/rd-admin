@@ -7,14 +7,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type PageController struct {}
-
 var pageService = new(services.PageService)
 
-func (controller *PageController) GetPageByPath(c *gin.Context) {
-	page, err := pageService.PagesGetByPath(c.Query("path"))
+type PageController struct {}
 
-	if err != nil {	
+func (controller *PageController) GetPageByPath(c *gin.Context) {
+	page, err := pageService.GetByPath(c.Query("path"))
+
+	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"message": err.Error()})
 		return
 	}

@@ -14,14 +14,25 @@ const routes: Routes = [
                 path: '',
                 component: MainPageComponent,
             },
-            {
-                path: 'pages',
-                loadChildren: () => import('./modules/pages/pages.module').then((m) => m.PagesModule),
-            },
-            { path: '**', pathMatch: 'full', component: NotFoundPageComponent },
         ],
     },
-    { path: 'login', component: LoginPageComponent },
+    {
+        path: 'pages',
+        component: MainLayoutComponent,
+        loadChildren: () => import('./modules/pages/pages.module').then((m) => m.PagesModule),
+    },
+    { path: 'admin', pathMatch: 'full', component: LoginPageComponent },
+    {
+        path: '**',
+        pathMatch: 'full',
+        component: MainLayoutComponent,
+        children: [
+            {
+                path: '',
+                component: NotFoundPageComponent,
+            },
+        ],
+    },
 ]
 
 @NgModule({

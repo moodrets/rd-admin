@@ -10,16 +10,23 @@ import (
 )
 
 func main() {
-	db,err := db.Connect()
+	database, err := db.Connect()
 	if err != nil {
         log.Fatal(err.Error())
     }
 
-	db.AutoMigrate(&models.Page{})
-	db.AutoMigrate(&models.Menu{})
-	db.AutoMigrate(&models.MenuItem{})
+	database.AutoMigrate(&models.Page{})
+	database.AutoMigrate(&models.Menu{})
+	database.AutoMigrate(&models.MenuItem{})
+	database.AutoMigrate(&models.Block{})
+	database.AutoMigrate(&models.Settings{})
+	
+	db.FillMockData(database)
 
 	router := gin.Default()
+
 	routes.PageRoutes(router)
+	routes.AuthRoutes(router)
+
 	router.Run("127.0.0.1:1346")
 }
