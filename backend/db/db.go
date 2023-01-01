@@ -10,15 +10,15 @@ import (
 )
 
 func Connect() (*gorm.DB, error) {
-    db, err := gorm.Open(mysql.Open("root:root@tcp(127.0.0.1:3308)/rd_admin?parseTime=true"), &gorm.Config{
+	db, err := gorm.Open(mysql.Open("root:root@tcp(127.0.0.1:3308)/rd_admin?parseTime=true"), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Silent),
 	})
 
-    if err != nil {
-        log.Fatal(err.Error())
-    }
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 
-    return db, err
+	return db, err
 }
 
 func FillMockData(db *gorm.DB) {

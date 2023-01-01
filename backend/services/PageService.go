@@ -7,7 +7,7 @@ import (
 	"log"
 )
 
-type PageService struct {}
+type PageService struct{}
 
 func (p *PageService) GetByPath(path string) (*models.Page, error) {
 	db, err := db.Connect()
@@ -16,7 +16,7 @@ func (p *PageService) GetByPath(path string) (*models.Page, error) {
 	}
 
 	page := models.Page{}
-	
+
 	// global menus
 	globalMenus := []models.Menu{}
 	db.Where("global = true").Preload("Items").Find(&globalMenus)
@@ -26,8 +26,8 @@ func (p *PageService) GetByPath(path string) (*models.Page, error) {
 	// .Preload("Menus.Items").Preload("Blocks")
 
 	if err := db.Where("path = ?", path).Where("hidden = false").Preload("Menus").Preload("Blocks").First(&page).Error; err != nil {
-        return &page, errors.New("Page not found")
-    }
+		return &page, errors.New("Page not found")
+	}
 
 	if len(globalMenus) != 0 {
 		page.Menus = append(page.Menus, globalMenus...)

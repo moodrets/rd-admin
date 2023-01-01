@@ -11,16 +11,17 @@ import (
 
 func main() {
 	database, err := db.Connect()
+
 	if err != nil {
-        log.Fatal(err.Error())
-    }
+		log.Fatal(err.Error())
+	}
 
 	database.AutoMigrate(&models.Page{})
 	database.AutoMigrate(&models.Menu{})
 	database.AutoMigrate(&models.MenuItem{})
 	database.AutoMigrate(&models.Block{})
-	database.AutoMigrate(&models.Settings{})
-	
+	// database.AutoMigrate(&models.Settings{})
+
 	db.FillMockData(database)
 
 	router := gin.Default()

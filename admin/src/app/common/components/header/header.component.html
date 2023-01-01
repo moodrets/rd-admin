@@ -4,7 +4,7 @@
             <i class="rd-icon flex-none mr-2 text-3xl">change_history</i>
             <span class="text-2xl font-bold">RD Admin</span>
         </a>
-        <div class="flex-none mr-3 lg:hidden" (click)="menuClickHandler()">
+        <div class="flex-none mr-3 lg:hidden cursor-pointer" (click)="menuClickHandler()">
             <i *ngIf="!(offcanvasService.visible | async)" class="rd-icon text-[32px]">menu</i>
             <i *ngIf="offcanvasService.visible | async" class="rd-icon text-[32px]">close</i>
         </div>
