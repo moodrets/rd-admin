@@ -22,8 +22,18 @@ func (controller *PageController) GetPageByPath(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"page": page})
 }
 
+func (controller *PageController) GetList(c *gin.Context) {
+	pages, err := pageService.GetList(100, 0)
+
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"pages": pages})
+}
+
 func (controller *PageController) GetById(c *gin.Context) {}
-func (controller *PageController) GetList(c *gin.Context) {}
 func (controller *PageController) Create(c *gin.Context)  {}
 func (controller *PageController) Update(c *gin.Context)  {}
 func (controller *PageController) Delete(c *gin.Context)  {}
