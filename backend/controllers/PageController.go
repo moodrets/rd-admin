@@ -23,7 +23,7 @@ func (controller *PageController) GetPageByPath(c *gin.Context) {
 }
 
 func (controller *PageController) GetList(c *gin.Context) {
-	pages, err := pageService.GetList(100, 0)
+	pages, err := pageService.GetList(20, 0)
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"message": err.Error()})

@@ -36,7 +36,7 @@ type Menu struct {
 	Name      string    `gorm:"unique;not null;varchar(255)" json:"name"`
 	Hidden    bool      `gorm:"type:bool;DEFAULT:false" json:"hidden"`
 	Global    bool      `gorm:"type:bool;DEFAULT:false" json:"global"`
-	Items     []MenuItem
+	Items     []MenuItem `json:"items,omitempty"`
 }
 
 type MenuItem struct {
@@ -47,7 +47,7 @@ type MenuItem struct {
 	Url       string    `gorm:"type:text" json:"url"`
 	Icon      string    `gorm:"type:text" json:"icon"`
 	Hidden    bool      `gorm:"type:bool;DEFAULT:false" json:"hidden"`
-	ParentId  uint      `gorm:"DEFAULT:0" json:"parent_id;"`
+	ParentId  uint      `gorm:"DEFAULT:0" json:"parent_id"`
 	MenuId    int       `json:"menu_id"`
 }
 

@@ -9,7 +9,7 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-func Connect() (*gorm.DB, error) {
+func Connect() (*gorm.DB) {
 	db, err := gorm.Open(mysql.Open("root:root@tcp(127.0.0.1:3308)/rd_admin?parseTime=true"), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Silent),
 	})
@@ -18,7 +18,7 @@ func Connect() (*gorm.DB, error) {
 		log.Fatal(err.Error())
 	}
 
-	return db, err
+	return db
 }
 
 func FillMockData(db *gorm.DB) {
