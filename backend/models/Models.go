@@ -58,5 +58,5 @@ type Block struct {
 	Name      string    `gorm:"not null;" json:"name"`
 	Title     string    `gorm:"type:text" json:"title"`
 	JsonData  string    `gorm:"type:json" json:"json_data"`
-	Global    bool      `gorm:"type:bool;DEFAULT:false" json:"global"`
+	Global    bool      `gorm:"type:bool;DEFAULT:true" json:"global"`
 }

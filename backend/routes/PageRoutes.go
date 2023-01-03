@@ -13,7 +13,7 @@ func PageRoutes(router *gin.Engine) {
 	group := router.Group("/pages")
 	group.GET("/list", pageController.GetList)
 	group.GET("/byPath", pageController.GetPageByPath)
-	group.GET("/byId", pageController.GetById)
+	group.GET("/byId/:id", pageController.GetById)
 	group.POST("/create", pageController.Create)
 	group.PUT("/update/:id", pageController.Update)
 	group.DELETE("/delete/:id", pageController.Delete)
